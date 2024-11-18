@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'purpleShards': "url('/bgSplash.png')",
+      }
+    },
   },
   plugins: [],
 }
