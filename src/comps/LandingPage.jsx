@@ -6,13 +6,13 @@ const LandingPage = () => {
   const [inviteCode, setInviteCode] = useState("");
   const navigate = useNavigate();
 
-  const handleJoinRoom = () => {
+  const joinRoom = () => {
     if (username && inviteCode) {
-      navigate("/room", { state: { username, inviteCode } });
+      navigate("/room", { state: { username, inviteCode } })
     } else {
-      alert("Enter username and invite code to continue");
+      alert("Enter username and invite code to continue")
     }
-  };
+  }
 
   return (
     // landing page full bg
@@ -56,7 +56,7 @@ const LandingPage = () => {
 
           {/* buttons */}
           <button
-            onClick={handleJoinRoom}
+            onClick={joinRoom}
             className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:bg-[rgb(128,0,180)]"
           >
             Join Room
@@ -75,7 +75,7 @@ const LandingPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default LandingPage;
