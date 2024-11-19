@@ -4,7 +4,7 @@ import React from "react";
 // components
 import LandingPage from "./comps/LandingPage";
 import QuizRoom from "./comps/QuizRoom";
-import CreateQuiz from "./comps/CreateQuiz";
+import CreateRoom from "./comps/CreateRoom";
 import LocalQuizzes from "./comps/LocalQuizzes";
 
 function App() {
