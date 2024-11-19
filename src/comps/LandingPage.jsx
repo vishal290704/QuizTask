@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const [username, setUsername] = useState("");
@@ -8,15 +8,19 @@ const LandingPage = () => {
 
   const joinRoom = () => {
     if (username && inviteCode) {
-      navigate("/room", { state: { username, inviteCode } })
+      navigate("/room", { state: { username, inviteCode } });
     } else {
-      alert("Enter username and invite code to continue")
+      alert("Enter username and invite code to continue");
     }
-  }
+  };
 
   return (
     // landing page full bg
     <div className="h-screen w-screen bg-purpleShards bg-cover bg-no-repeat flex items-center justify-center bg-gray-100">
+      <div className="absolute p-[10px] font-bold text-white top-[10px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+        <Link to="/admin">ADMIN</Link>
+      </div>
+
       {/* panel */}
       <div className="flex w-4/5 max-w-4xl bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
         {/* left */}
@@ -75,7 +79,7 @@ const LandingPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LandingPage;

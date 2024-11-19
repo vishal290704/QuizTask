@@ -4,8 +4,11 @@ import React from "react";
 // components
 import LandingPage from "./comps/LandingPage";
 import QuizRoom from "./comps/QuizRoom";
-import CreateRoom from "./comps/CreateRoom";
 import LocalQuizzes from "./comps/LocalQuizzes";
+
+// admin comps
+import AdminRoutes from "./comps/admin/AdminRoutes";
+import CreateRoom from "./comps/admin/CreateRoom";
 
 function App() {
   return (
@@ -14,8 +17,11 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/room/:roomId" element={<QuizRoom />} />
-        <Route path="/create" element={<CreateRoom />} />
         <Route path="/local-quizzes" element={<LocalQuizzes />} />
+
+        {/* admin */}
+        <Route path="/create" element={<CreateRoom />} />
+        <Route path="/admin" element={<AdminRoutes />} />
       </Routes>
     </Router>
   );
