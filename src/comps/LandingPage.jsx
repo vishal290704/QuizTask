@@ -22,7 +22,7 @@ const LandingPage = () => {
       </div>
 
       {/* panel */}
-      <div className="flex w-4/5 max-w-4xl bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+      <div className="flex w-4/5 max-w-4xl px-[2em] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
         {/* left */}
         <div className="w-1/2 p-6 rounded-l-lg flex flex-col justify-center">
           <h1 className="text-4xl font-bold text-white">QuizSutra</h1>
@@ -70,7 +70,7 @@ const LandingPage = () => {
           <div className="text-center">or</div>
           <div className="mt-4 text-center">
             <button
-              onClick={() => navigate("/local-quizzes")}
+              onClick={() => navigate("/local-quiz")}
               className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:bg-[rgb(128,0,180)]"
             >
               Play Local Quizzes

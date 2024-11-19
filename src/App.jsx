@@ -8,20 +8,23 @@ import LocalQuizzes from "./comps/LocalQuizzes";
 
 // admin comps
 import AdminRoutes from "./comps/admin/AdminRoutes";
-import CreateRoom from "./comps/admin/CreateRoom";
+import CreateQuiz from "./comps/admin/CreateQuiz";
+import QuizController from "./comps/admin/QuizController";
+import QuizResults from "./comps/admin/QuizResults";
 
 function App() {
   return (
-
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/room/:roomId" element={<QuizRoom />} />
-        <Route path="/local-quizzes" element={<LocalQuizzes />} />
+        <Route path="/local-quiz" element={<LocalQuizzes />} />
 
         {/* admin */}
-        <Route path="/create" element={<CreateRoom />} />
+        <Route path="/create" element={<CreateQuiz />} />
         <Route path="/admin" element={<AdminRoutes />} />
+        <Route path="/admin/quiz-control" element={<QuizController />} />
+        <Route path="/admin/quiz-results" element={<QuizResults />} />
       </Routes>
     </Router>
   );

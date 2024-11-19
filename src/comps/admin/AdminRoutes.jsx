@@ -18,15 +18,28 @@ const AdminRoutes = () => {
         <ul className="text-[2em] items-center text-center">
           <li>
             <Link
-              to="/"
+              to="/create"
               className="hover:text-white hover:[text-shadow:0_0_10px_purple]"
             >
-              Home - QuizSutra
+              Create New Quiz
             </Link>
           </li>
-          <li>TBD</li>
-          <li>TBD</li>
-          <li>TBD</li>
+          <li>
+            <Link
+              to="/admin/quiz-control"
+              className="hover:text-white hover:[text-shadow:0_0_10px_purple]"
+            >
+              Quiz Control
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/admin/quiz-results"
+              className="hover:text-white hover:[text-shadow:0_0_10px_purple]"
+            >
+              Check Results
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
