@@ -49,7 +49,7 @@ const CreateQuiz = () => {
       console.log(response.data);
       setIsRegistered(true);
     } catch (error) {
-      console.error(error.response?.data || error.message);
+      console.error(error.message);
       setPrompt("Registration failed. Try again.");
     } finally {
       setBtnTxt("Continue");
