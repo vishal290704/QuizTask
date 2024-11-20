@@ -10,7 +10,7 @@ const roomUrl = "/sampleAPI/sampleRoom.json";
 const SAMPLE_ADMIN_ID = "testAdmin";
 const SAMPLE_ADMIN_PASS = "newPass";
 
-const QuizControl = ({quizId}) => {
+const QuizControl = ({ quizId }) => {
   useEffect(() => {
     document.title = "Quiz Control - QuizSutra";
   }, []);
@@ -75,7 +75,7 @@ const QuizControl = ({quizId}) => {
   };
 
   // Fetch players data
-  
+
   const fetchPlayers = async () => {
     try {
       const response = await axios.get(roomUrl);
@@ -124,12 +124,16 @@ const QuizControl = ({quizId}) => {
       </h1>
 
       {/* navigation */}
-      <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
-        <Link to="/">HOME</Link>
-      </div>
-      <div className="absolute p-[10px] font-bold text-white top-[12px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
-        <Link to="/admin">BACK</Link>
-      </div>
+      <Link to="/">
+        <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+          HOME
+        </div>
+      </Link>
+      <Link to="/admin">
+        <div className="absolute p-[10px] font-bold text-white top-[12px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+          BACK
+        </div>
+      </Link>
 
       {!isLoggedIn ? (
         // panel
@@ -170,14 +174,22 @@ const QuizControl = ({quizId}) => {
       ) : (
         <div className="flex h-[90vh]">
           {/* Left Panel */}
-          <div className="flex flex-col p-6 bg-white my-[2vh] rounded-md mx-2 shadow-lg w-4/5">
-            <div className="mb-6 p-4 bg-gray-50 shadow-md rounded-lg">
-              <h2 className="text-3xl font-semibold">{quizTitle}</h2>
-              <p className="text-gray-600">Status: {status}</p>              
-              <p className="text-gray-600">Quiz Key: {quizKey}</p>              
+          <div className="flex flex-col p-6 bg-gray-100 my-[2vh] rounded-lg mx-2 shadow-lg w-4/5">
+            <div className="flex justify-between items-center mb-6 p-4 pr-6 bg-gray-50 shadow-md rounded-lg">
+              <div>
+                <h2 className="text-3xl font-semibold">{quizTitle}</h2>
+              </div>
+              <div>
+                <p className="text-gray-600">
+                  <b>Quiz Key:</b> {quizKey}
+                </p>
+                <p className="text-gray-600">
+                  <b>Status:</b> {status}
+                </p>
+              </div>
             </div>
             <div className="p-4 bg-gray-50 shadow-md rounded-lg">
-              <h3 className="text-xl font-bold mb-4">Control Quiz</h3>
+              <h3 className="text-2xl font-semibold mb-4">Quiz Controls</h3>
               <div className="flex justify-between">
                 <button
                   onClick={() => controlQuiz("start")}
@@ -213,7 +225,7 @@ const QuizControl = ({quizId}) => {
           </div>
 
           {/* Right Panel */}
-          <div className="w-1/5 p-3 bg-gray-50 shadow-md rounded-lg mr-2 my-[2vh]">
+          <div className="w-1/5 p-3 bg-gray-100 shadow-md rounded-lg mr-2 my-[2vh]">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Players : {players.length}</h3>
               <button
@@ -225,11 +237,7 @@ const QuizControl = ({quizId}) => {
             </div>
             <ul className="space-y-2">
               {players.length > 0 ? (
-                players.map((p) => (
-                  <li className="border-b-2 p-2">
-                    {p}
-                  </li>
-                ))
+                players.map((p) => <li className="border-b-2 p-2">{p}</li>)
               ) : (
                 <p className="text-gray-500">Waiting for players...</p>
               )}

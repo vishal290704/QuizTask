@@ -92,12 +92,16 @@ const CreateQuiz = () => {
       </h1>
 
       {/* navigation */}
-      <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
-        <Link to="/">HOME</Link>
-      </div>
-      <div className="absolute p-[10px] font-bold text-white top-[12px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
-        <Link to="/admin">BACK</Link>
-      </div>
+      <Link to="/">
+        <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+          HOME
+        </div>
+      </Link>
+      <Link to="/admin">
+        <div className="absolute p-[10px] font-bold text-white top-[12px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+          BACK
+        </div>
+      </Link>
 
       {/* panel */}
       <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">

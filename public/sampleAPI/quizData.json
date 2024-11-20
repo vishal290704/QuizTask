@@ -1,6 +1,7 @@
 [
   {
     "quizKey": "quiz1",
+    "status" : "stop",
     "adminID": "admin123",
     "quizTitle": "CCC Quiz",
     "questions": [
@@ -94,6 +95,7 @@
   {
     "quizKey": "quiz2",
     "adminID": "newAdmin",
+    "status" : "stop",
     "quizTitle": "SPOCC",
     "questions": [
       {

@@ -3,6 +3,6 @@
   "quizKey": "quiz1",
   "roomTitle": "Sample Quiz Room",
   "adminID": "testAdmin",
-  "players": ["Akash", "Vishal", "Aniket"],
+  "players": ["Akash","Rohani", "Vishal", "Aniket"],
   "status": "active"
 }
