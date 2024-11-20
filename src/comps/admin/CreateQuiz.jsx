@@ -27,44 +27,34 @@ const CreateQuiz = () => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   // Register the admin
-
-  // const registerAdmin = async (e) => {
-  //   e.preventDefault();
-
-  //   const userData = {
-  //     admin: adminid,
-  //     password: adminpass,
-  //   };
-
-  //   try {
-  //     setBtnTxt("...");
-  //     const response = await axios.post(registerUrl, userData, {
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //     console.log(response.data);
-  //     setPrompt("Registration successful. Proceed to create your quiz.");
-  //     setIsRegistered(true);
-  //   } catch (error) {
-  //     console.error(error.response.data);
-  //     setPrompt("Registration failed. Try again.");
-  //   } finally {
-  //     setBtnTxt("Continue");
-  //   }
-  // };
-
-  // sample id test
-  const registerAdmin = (e) => {
+  const registerAdmin = async (e) => {
     e.preventDefault();
-
+  
+    // mock login
     if (adminid === SAMPLE_ADMIN_ID && adminpass === SAMPLE_ADMIN_PASS) {
       setPrompt("Registration successful. Proceed to create your quiz.");
-      setIsRegistered(true); // Allow proceeding to quiz creation
-    } else {
-      setPrompt("Invalid Admin ID or Password. Try again.");
+      setIsRegistered(true);
+      return
     }
 
-    setTimeout(() => setBtnTxt("Continue"), 5000);
-    setBtnTxt("...");
+    const userData = {
+      admin: adminid,
+      password: adminpass,
+    };
+
+    try {
+      setBtnTxt("...");
+      const response = await axios.post(registerUrl, userData, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response.data);
+      setIsRegistered(true);
+    } catch (error) {
+      console.error(error.response.data);
+      setPrompt("Registration failed. Try again.");
+    } finally {
+      setBtnTxt("Continue");
+    }
   };
 
   // Add a new question
@@ -102,10 +92,10 @@ const CreateQuiz = () => {
       </h1>
 
       {/* navigation */}
-      <div className="absolute p-[10px] font-bold text-white top-[10px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+      <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
         <Link to="/">HOME</Link>
       </div>
-      <div className="absolute p-[10px] font-bold text-white top-[10px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+      <div className="absolute p-[10px] font-bold text-white top-[12px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
         <Link to="/admin">BACK</Link>
       </div>
 

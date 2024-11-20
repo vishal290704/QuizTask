@@ -21,7 +21,7 @@ const LandingPage = () => {
   return (
     // landing page full bg
     <div className="h-screen w-screen bg-gradient-to-t from-violet-500 to-fuchsia-500 flex items-center justify-center bg-gray-100">
-      <div className="absolute p-[10px] font-bold text-white top-[10px] right-[10px] bg-[rgba(0,0,0,0.4)] rounded-xl shadow-md">
+      <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.4)] rounded-xl shadow-md">
         <Link to="/admin">ADMIN</Link>
       </div>
 

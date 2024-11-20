@@ -14,7 +14,7 @@ const AdminRoutes = () => {
         ADMIN ROUTES
       </h1>
 
-      <div className="absolute p-[10px] font-bold text-white top-[10px] right-[10px] bg-[rgba(0,0,0,0.4)] rounded-xl shadow-md">
+      <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.4)] rounded-xl shadow-md">
         <Link to="/">HOME</Link>
       </div>
 
