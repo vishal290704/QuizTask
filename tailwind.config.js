@@ -6,11 +6,6 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'purpleShards': "url('/bgSplash.png')",
-        'adminBG': "url('/adminbg.png')",
-      },
-
       textShadow: {
         glow: '0 0 10px black',
         heavy: '2px 2px 4px rgba(0, 0, 0, 0.8)',

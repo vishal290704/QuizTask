@@ -1,0 +1,20 @@
+{
+  "quizRooms": [
+    {
+      "roomKey": "room1",
+      "quizKey": "quiz1",
+      "roomTitle": "Sample Quiz Room",
+      "adminID": "admin123",
+      "participants": ["Akash", "Vishal", "Aniket"],
+      "status": "active"
+    },
+    {
+      "roomKey": "room2",
+      "quizKey": "quiz2",
+      "roomTitle": "Quiz Room 2",
+      "adminID": "newAdmin",
+      "participants": ["Alok", "Ayush", "Aditya"],
+      "status": "active"
+    }
+  ]
+}

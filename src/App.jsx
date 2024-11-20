@@ -9,7 +9,7 @@ import LocalQuizzes from "./comps/LocalQuizzes";
 // admin comps
 import AdminRoutes from "./comps/admin/AdminRoutes";
 import CreateQuiz from "./comps/admin/CreateQuiz";
-import QuizController from "./comps/admin/QuizController";
+import QuizControl from "./comps/admin/QuizControl";
 import QuizResults from "./comps/admin/QuizResults";
 
 function App() {
@@ -21,9 +21,9 @@ function App() {
         <Route path="/local-quiz" element={<LocalQuizzes />} />
 
         {/* admin */}
-        <Route path="/create" element={<CreateQuiz />} />
+        <Route path="/admin/create" element={<CreateQuiz />} />
         <Route path="/admin" element={<AdminRoutes />} />
-        <Route path="/admin/quiz-control" element={<QuizController />} />
+        <Route path="/admin/quiz-control" element={<QuizControl />} />
         <Route path="/admin/quiz-results" element={<QuizResults />} />
       </Routes>
     </Router>

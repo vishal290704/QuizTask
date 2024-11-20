@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -11,6 +11,11 @@ const SAMPLE_ADMIN_ID = "testAdmin";
 const SAMPLE_ADMIN_PASS = "newPass";
 
 const CreateQuiz = () => {
+
+  useEffect(() => {
+    document.title = "Create New Quiz - QuizSutra";
+  }, []); 
+
   // state management
   const [adminid, setAdmin] = useState("");
   const [adminpass, setAdminPass] = useState("");
@@ -66,7 +71,7 @@ const CreateQuiz = () => {
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { question: "", options: ["", "", "", ""], answer: "", questionKey: questions.length + 1 },
+      { 'questionText': "", "options": ["", "", "", ""], "correctAnswer": "", questionKey: questions.length + 1 },
     ]);
   };
 
@@ -90,7 +95,7 @@ const CreateQuiz = () => {
   };
 
   return (
-    <div className="flex-col justify-center items-center bg-adminBG bg-cover bg-repeat-y w-screen h-screen">
+    <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* title */}
       <h1 className="text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
         CREATE NEW QUIZ
@@ -105,7 +110,7 @@ const CreateQuiz = () => {
       </div>
 
       {/* panel */}
-      <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.55)] rounded-xl shadow-md">
+      <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
         {/* if not registered */}
         {!isRegistered ? (
           // display signup/registration form
@@ -133,7 +138,7 @@ const CreateQuiz = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:bg-[rgb(128,0,180)]"
+              className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:shadow-md hover:bg-[rgb(151,62,199)]"
             >
               {btnTxt}
             </button>

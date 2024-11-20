@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
@@ -14,15 +14,19 @@ const LandingPage = () => {
     }
   };
 
+  useEffect(() => {
+    document.title = "Home - QuizSutra";
+  }, []); 
+
   return (
     // landing page full bg
-    <div className="h-screen w-screen bg-purpleShards bg-cover bg-no-repeat flex items-center justify-center bg-gray-100">
-      <div className="absolute p-[10px] font-bold text-white top-[10px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+    <div className="h-screen w-screen bg-gradient-to-t from-violet-500 to-fuchsia-500 flex items-center justify-center bg-gray-100">
+      <div className="absolute p-[10px] font-bold text-white top-[10px] right-[10px] bg-[rgba(0,0,0,0.4)] rounded-xl shadow-md">
         <Link to="/admin">ADMIN</Link>
       </div>
 
       {/* panel */}
-      <div className="flex w-4/5 max-w-4xl px-[2em] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+      <div className="flex w-4/5 max-w-4xl px-[2em] bg-[rgba(0,0,0,0.4)] rounded-xl shadow-md">
         {/* left */}
         <div className="w-1/2 p-6 rounded-l-lg flex flex-col justify-center">
           <h1 className="text-4xl font-bold text-white">QuizSutra</h1>
@@ -61,17 +65,15 @@ const LandingPage = () => {
           {/* buttons */}
           <button
             onClick={joinRoom}
-            className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:bg-[rgb(128,0,180)]"
+            className="w-full mb-3 py-2 px-4 bg-[rgb(135,28,188)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(138,42,197)]"
           >
             Join Room
           </button>
-          <br />
-          <br />
-          <div className="text-center">or</div>
+          <div className="text-center block">or</div>
           <div className="mt-4 text-center">
             <button
               onClick={() => navigate("/local-quiz")}
-              className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:bg-[rgb(128,0,180)]"
+              className="w-full py-2 px-4 bg-[rgb(128,28,188)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(138,42,197)]"
             >
               Play Local Quizzes
             </button>

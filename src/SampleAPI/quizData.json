@@ -1,0 +1,181 @@
+[
+  {
+    "quizKey": "quiz1",
+    "adminID": "admin123",
+    "quizTitle": "CCC Quiz",
+    "questions": [
+      {
+        "quesKey": "1",
+        "question": "What is the output of the following code: System.out.println(2 + 2 * 3);",
+        "options": ["8", "10", "12", "6"],
+        "correctAnswer": "8",
+        "category": "Coding",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "2",
+        "question": "Which data structure uses the LIFO principle?",
+        "options": ["Queue", "Stack", "Linked List", "Heap"],
+        "correctAnswer": "Stack",
+        "category": "Coding",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "3",
+        "question": "What is the capital of France?",
+        "options": ["Paris", "Berlin", "Rome", "Madrid"],
+        "correctAnswer": "Paris",
+        "category": "Pop Culture",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "4",
+        "question": "Find the next number in the series: 2, 4, 8, 16, __.",
+        "options": ["20", "32", "64", "128"],
+        "correctAnswer": "32",
+        "category": "Reasoning",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "5",
+        "question": "Who directed the movie 'Inception'?",
+        "options": ["Quentin Tarantino", "Christopher Nolan", "James Cameron", "Steven Spielberg"],
+        "correctAnswer": "Christopher Nolan",
+        "category": "Pop Culture",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "6",
+        "question": "If a train travels 60 miles in 1 hour, how long will it take to travel 180 miles?",
+        "options": ["1 hour", "2 hours", "3 hours", "4 hours"],
+        "correctAnswer": "3 hours",
+        "category": "Reasoning",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "7",
+        "question": "Which keyword is used to inherit a class in Java?",
+        "options": ["extends", "implements", "inherits", "super"],
+        "correctAnswer": "extends",
+        "category": "Coding",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "8",
+        "question": "What does HTTP stand for?",
+        "options": [
+          "Hyper Text Transfer Protocol",
+          "High Transfer Text Protocol",
+          "Hyperlink Text Transmission Process",
+          "Hyper Transmission Technology Protocol"
+        ],
+        "correctAnswer": "Hyper Text Transfer Protocol",
+        "category": "Coding",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "9",
+        "question": "In a right triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides. This is known as?",
+        "options": ["Pythagoras Theorem", "Binomial Theorem", "Law of Sines", "Law of Cosines"],
+        "correctAnswer": "Pythagoras Theorem",
+        "category": "Reasoning",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "10",
+        "question": "What is the primary ingredient in guacamole?",
+        "options": ["Tomato", "Avocado", "Lemon", "Chili"],
+        "correctAnswer": "Avocado",
+        "category": "Pop Culture",
+        "difficulty": "Easy"
+      }
+    ]
+  },
+  {
+    "quizKey": "quiz2",
+    "adminID": "newAdmin",
+    "quizTitle": "SPOCC",
+    "questions": [
+      {
+        "quesKey": "1",
+        "question": "What is the chemical symbol for water?",
+        "options": ["O2", "H2O", "CO2", "HO"],
+        "correctAnswer": "H2O",
+        "category": "Science",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "2",
+        "question": "Which planet is known as the Red Planet?",
+        "options": ["Earth", "Venus", "Mars", "Jupiter"],
+        "correctAnswer": "Mars",
+        "category": "Science",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "3",
+        "question": "What is the powerhouse of the cell?",
+        "options": ["Nucleus", "Ribosome", "Mitochondria", "Chloroplast"],
+        "correctAnswer": "Mitochondria",
+        "category": "Biology",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "4",
+        "question": "What is the square root of 64?",
+        "options": ["6", "7", "8", "9"],
+        "correctAnswer": "8",
+        "category": "Mathematics",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "5",
+        "question": "Who wrote 'Hamlet'?",
+        "options": ["Charles Dickens", "William Shakespeare", "Mark Twain", "Jane Austen"],
+        "correctAnswer": "William Shakespeare",
+        "category": "Literature",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "6",
+        "question": "Which gas do plants absorb from the atmosphere?",
+        "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+        "correctAnswer": "Carbon Dioxide",
+        "category": "Science",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "7",
+        "question": "What is the capital of Japan?",
+        "options": ["Tokyo", "Osaka", "Kyoto", "Hiroshima"],
+        "correctAnswer": "Tokyo",
+        "category": "Geography",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "8",
+        "question": "Who is known as the father of computers?",
+        "options": ["Alan Turing", "Charles Babbage", "Steve Jobs", "Bill Gates"],
+        "correctAnswer": "Charles Babbage",
+        "category": "History",
+        "difficulty": "Medium"
+      },
+      {
+        "quesKey": "9",
+        "question": "Which is the largest ocean on Earth?",
+        "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
+        "correctAnswer": "Pacific",
+        "category": "Geography",
+        "difficulty": "Easy"
+      },
+      {
+        "quesKey": "10",
+        "question": "What is the speed of light?",
+        "options": ["300,000 km/s", "150,000 km/s", "100,000 km/s", "50,000 km/s"],
+        "correctAnswer": "300,000 km/s",
+        "category": "Physics",
+        "difficulty": "Medium"
+      }
+    ]
+  }
+]
