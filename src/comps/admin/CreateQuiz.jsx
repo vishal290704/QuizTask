@@ -3,38 +3,37 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 // API URLs
-let registerUrl = "/api/admin/register"; // Admin registration endpoint
-let createQuizUrl = "/api/admin/create-quiz"; // Quiz create endpoint
+let registerUrl = "/api/admin/register";
+let createQuizUrl = "/api/admin/create-quiz";
 
 // sample id
 const SAMPLE_ADMIN_ID = "testAdmin";
 const SAMPLE_ADMIN_PASS = "newPass";
 
 const CreateQuiz = () => {
-
   useEffect(() => {
     document.title = "Create New Quiz - QuizSutra";
-  }, []); 
+  }, []);
 
   // state management
   const [adminid, setAdmin] = useState("");
   const [adminpass, setAdminPass] = useState("");
   const [prompt, setPrompt] = useState("Create a unique ID to continue");
   const [btnTxt, setBtnTxt] = useState("Continue");
-
   const [quizTitle, setQuizTitle] = useState("");
+  const [status, setStatus] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
 
   // Register the admin
   const registerAdmin = async (e) => {
     e.preventDefault();
-  
+
     // mock login
     if (adminid === SAMPLE_ADMIN_ID && adminpass === SAMPLE_ADMIN_PASS) {
       setPrompt("Registration successful. Proceed to create your quiz.");
       setIsRegistered(true);
-      return
+      return;
     }
 
     const userData = {
@@ -50,7 +49,7 @@ const CreateQuiz = () => {
       console.log(response.data);
       setIsRegistered(true);
     } catch (error) {
-      console.error(error.response.data);
+      console.error(error.response?.data || error.message);
       setPrompt("Registration failed. Try again.");
     } finally {
       setBtnTxt("Continue");
@@ -61,7 +60,14 @@ const CreateQuiz = () => {
   const addQuestion = () => {
     setQuestions([
       ...questions,
-      { 'questionText': "", "options": ["", "", "", ""], "correctAnswer": "", questionKey: questions.length + 1 },
+      {
+        questionText: "",
+        options: ["", "", "", ""],
+        correctAnswer: "",
+        category: "",
+        difficulty: "",
+        questionKey: questions.length + 1,
+      },
     ]);
   };
 
@@ -70,6 +76,7 @@ const CreateQuiz = () => {
     const quizData = {
       admin: adminid,
       title: quizTitle,
+      status,
       questions,
     };
 
@@ -105,9 +112,7 @@ const CreateQuiz = () => {
 
       {/* panel */}
       <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
-        {/* if not registered */}
         {!isRegistered ? (
-          // display signup/registration form
           <form onSubmit={registerAdmin}>
             <div className="mb-4 font-semibold">{prompt}</div>
             <div className="mb-4">
@@ -138,12 +143,9 @@ const CreateQuiz = () => {
             </button>
           </form>
         ) : (
-          // display add quiz panel after successful registration
           <div className="w-3/5">
-            <div className="mb-4">
-              <label className="block text-[2md] font-medium">
-                Quiz Title:
-              </label>
+            <div className="mb-1">
+              <label className="block text-[2md] font-medium">Quiz Title:</label>
               <input
                 type="text"
                 value={quizTitle}
@@ -152,6 +154,20 @@ const CreateQuiz = () => {
                 placeholder="Enter quiz title"
               />
             </div>
+
+            {/* Status checkbox */}
+            <div className="mb-4">
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  checked={status}
+                  onChange={(e) => setStatus(e.target.checked)}
+                  className="form-checkbox"
+                />
+                <span className="ml-2 text-md font-medium">Start quiz Instantly</span>
+              </label>
+            </div>
+
             <div>
               {questions.map((q, index) => (
                 <div key={index} className="mb-4 border-b pb-2">
@@ -160,10 +176,10 @@ const CreateQuiz = () => {
                   </label>
                   <input
                     type="text"
-                    value={q.question}
+                    value={q.questionText}
                     onChange={(e) => {
                       const newQuestions = [...questions];
-                      newQuestions[index].question = e.target.value;
+                      newQuestions[index].questionText = e.target.value;
                       setQuestions(newQuestions);
                     }}
                     placeholder={`Question ${index + 1}`}
@@ -177,8 +193,7 @@ const CreateQuiz = () => {
                         value={opt}
                         onChange={(e) => {
                           const newQuestions = [...questions];
-                          newQuestions[index].options[optIndex] =
-                            e.target.value;
+                          newQuestions[index].options[optIndex] = e.target.value;
                           setQuestions(newQuestions);
                         }}
                         placeholder={`Option ${optIndex + 1}`}
@@ -188,20 +203,41 @@ const CreateQuiz = () => {
                   </div>
                   <input
                     type="text"
-                    value={q.answer}
+                    value={q.correctAnswer}
                     onChange={(e) => {
                       const newQuestions = [...questions];
-                      newQuestions[index].answer = e.target.value;
+                      newQuestions[index].correctAnswer = e.target.value;
                       setQuestions(newQuestions);
                     }}
                     placeholder="Correct Answer"
+                    className="w-full border rounded-lg p-2 mt-2"
+                  />
+                  <input
+                    type="text"
+                    value={q.category}
+                    onChange={(e) => {
+                      const newQuestions = [...questions];
+                      newQuestions[index].category = e.target.value;
+                      setQuestions(newQuestions);
+                    }}
+                    placeholder="Question Category"
+                    className="w-full border rounded-lg p-2 mt-2"
+                  />
+                  <input
+                    type="text"
+                    value={q.difficulty}
+                    onChange={(e) => {
+                      const newQuestions = [...questions];
+                      newQuestions[index].difficulty = e.target.value;
+                      setQuestions(newQuestions);
+                    }}
+                    placeholder="Question Difficulty"
                     className="w-full border rounded-lg p-2 mt-2"
                   />
                 </div>
               ))}
             </div>
 
-            {/* add new question */}
             <div className="flex flex-col">
               <button
                 onClick={addQuestion}
@@ -209,7 +245,6 @@ const CreateQuiz = () => {
               >
                 Add Question
               </button>
-              {/* submit quiz */}
               <button
                 onClick={submitQuiz}
                 className="py-2 px-4 bg-purple-700 text-white rounded-lg hover:bg-purple-500 mt-2"

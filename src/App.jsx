@@ -17,7 +17,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/room/:roomId" element={<QuizRoom />} />
+        <Route path="/room/" element={<QuizRoom />} />
         <Route path="/local-quiz" element={<LocalQuizzes />} />
 
         {/* admin */}
