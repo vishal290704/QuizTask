@@ -120,7 +120,7 @@ const QuizControl = ({ quizId }) => {
     <div className="flex flex-col h-screen bg-gradient-to-t from-violet-500 to-fuchsia-500">
       {/* title */}
       <h1 className="text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
-        CREATE NEW QUIZ
+        QUIZ CONTROL
       </h1>
 
       {/* navigation */}
