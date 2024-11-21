@@ -174,21 +174,22 @@ const QuizControl = ({ quizId }) => {
       ) : (
         <div className="flex h-[90vh]">
           {/* Left Panel */}
-          <div className="flex flex-col p-6 bg-gray-100 my-[2vh] rounded-lg mx-2 shadow-lg w-4/5">
-            <div className="flex justify-between items-center mb-6 p-4 pr-6 bg-gray-50 shadow-md rounded-lg">
+          <div className="flex text-white flex-col p-6 bg-[rgba(0,0,0,0.3)] my-[2vh] rounded-lg mx-2 shadow-lg w-4/5">
+            <div className="flex justify-between items-center mb-6 p-4 pr-6 bg-[rgba(255,255,255,0.3)] shadow-lg rounded-lg">
               <div>
                 <h2 className="text-3xl font-semibold">{quizTitle}</h2>
               </div>
               <div>
-                <p className="text-gray-600">
+                <p>
                   <b>Quiz Key:</b> {quizKey}
                 </p>
-                <p className="text-gray-600">
+                <p>
                   <b>Status:</b> {status}
                 </p>
               </div>
             </div>
-            <div className="p-4 bg-gray-50 shadow-md rounded-lg">
+            {/* buttons for action */}
+            <div className="p-4 shadow-lg bg-[rgba(255,255,255,0.3)] rounded-lg">
               <h3 className="text-2xl font-semibold mb-4">Quiz Controls</h3>
               <div className="flex justify-between">
                 <button
@@ -225,7 +226,7 @@ const QuizControl = ({ quizId }) => {
           </div>
 
           {/* Right Panel */}
-          <div className="w-1/5 p-3 bg-gray-100 shadow-md rounded-lg mr-2 my-[2vh]">
+          <div className="w-1/5 p-3 bg-gray-50 shadow-md rounded-lg mr-2 my-[2vh]">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Players : {players.length}</h3>
               <button
