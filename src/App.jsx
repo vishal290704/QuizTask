@@ -6,6 +6,8 @@ import LandingPage from "./comps/LandingPage";
 import QuizRoom from "./comps/QuizRoom";
 import LocalQuizzes from "./comps/LocalQuizzes";
 
+import './comps/clock';
+
 // admin comps
 import AdminRoutes from "./comps/admin/AdminRoutes";
 import CreateQuiz from "./comps/admin/CreateQuiz";

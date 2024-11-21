@@ -21,9 +21,9 @@ const LandingPage = () => {
 
   return (
     // landing page full bg
-    <div className="h-screen w-screen bg-gradient-to-t from-violet-500 to-fuchsia-500 flex items-center justify-center bg-gray-100">
-      <Link to="/admin">
-        <div className="absolute p-[10px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+    <div className="h-screen w-screen  bg-gradient-to-t from-violet-500 to-fuchsia-500 flex items-center justify-center bg-gray-100">
+      <Link to="/admin" className="absolute bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md p-[10px] font-bold text-white top-3 right-5">
+        <div className="">
           ADMIN
         </div>
       </Link>
@@ -39,7 +39,7 @@ const LandingPage = () => {
         </div>
 
         {/* right */}
-        <div className="w-1/2 p-8 text-white">
+        <form className="w-1/2 p-8 text-white" onSubmit={joinRoom}>
           <h2 className="text-2xl text-center font-bold mb-4">
             Join a Quiz Room
           </h2>
@@ -67,7 +67,6 @@ const LandingPage = () => {
 
           {/* buttons */}
           <button
-            onClick={joinRoom}
             className="w-full mb-3 py-2 px-4 bg-[rgb(135,28,188)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(138,42,197)]"
           >
             Join Room
@@ -81,7 +80,7 @@ const LandingPage = () => {
               Play Local Quizzes
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
