@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const LandingPage = () => {
   const [username, setUsername] = useState("");
-  const [inviteCode, setInviteCode] = useState("");
+  const [roomCode, setRoomCode] = useState("");
   const navigate = useNavigate();
 
   const joinRoom = () => {
-    if (username && inviteCode) {
-      navigate("/room", { state: { username, inviteCode } });
+    if (username && roomCode) {
+      // navigate('"/room", { state: { username, roomCode } }');
+      navigate(`/room/${roomCode}/${username}`);
     } else {
       alert("Enter username and invite code to continue");
     }
@@ -16,7 +17,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     document.title = "Home - QuizSutra";
-  }, []); 
+  }, []);
 
   return (
     // landing page full bg
@@ -57,8 +58,8 @@ const LandingPage = () => {
             <label className="block text-sm font-medium">Room Code:</label>
             <input
               type="text"
-              value={inviteCode}
-              onChange={(e) => setInviteCode(e.target.value)}
+              value={roomCode}
+              onChange={(e) => setRoomCode(e.target.value)}
               className="mt-1 block w-full border rounded-lg text-gray-600 border-gray-300 p-2 focus:outline"
               placeholder="Enter room code"
             />
