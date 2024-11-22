@@ -10,6 +10,16 @@ const QuizRoom = () => {
   // data from previous page
   let { roomCode, username } = useParams();
 
+  // lock option
+  let [currentQues, setCurrentQues] = useState("");
+  let [selected, setSelected] = useState("");
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
+  // let lockOption = (quesInd, opt) => {
+  //   console.log(quesInd + 1, "+", opt);
+  // };
+
+  // const currentQuestionIndex = 0;
+
   useEffect(() => {
     document.title = `${roomCode} - QuizSutra`;
   }, []);
@@ -19,7 +29,7 @@ const QuizRoom = () => {
   const [prompt, setPrompt] = useState("Waiting for the admin to start");
   let [loadedTitle, setTitle] = useState("");
   const [questions, setQuestions] = useState([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  let [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10); // question countdown default to 10 second
 
   // axios fetch
@@ -33,19 +43,25 @@ const QuizRoom = () => {
       } else {
         setPrompt("Waiting for the admin to start");
       }
-      console.log(quizStatus);
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  // useEffect to restart fetch
+  const lockOption = (cuestionIndex, optionIndex) => () => {
+    console.log(optionIndex);
+    console.log(cuestionIndex);
+    
+    setSelectedOptionIndex(optionIndex); // Update the selected option index
+  };
+
+  // useEffect to restart fetch if status false
   useEffect(() => {
     // if status is false
     if (!quizStatus) {
       const timer = setInterval(() => {
         fetchQuizStatus();
-      }, 1000);
+      }, 2000);
 
       return () => clearInterval(timer);
     }
@@ -60,10 +76,12 @@ const QuizRoom = () => {
   useEffect(() => {
     if (quizStatus && questions.length > 0) {
       const questionTimer = setInterval(() => {
-        setCurrentQuestionIndex(
-          (prevIndex) => (prevIndex + 1) % questions.length
-        );
-        setTimeLeft(10); // Reset time to 10 seconds again
+        if (currentQuestionIndex != 9) {
+          setCurrentQuestionIndex(
+            (prevIndex) => (prevIndex + 1) % questions.length
+          );
+          setTimeLeft(10); // Reset time to 10 seconds again
+        }
       }, 10000);
 
       return () => clearInterval(questionTimer);
@@ -82,7 +100,7 @@ const QuizRoom = () => {
   }, [quizStatus, questions, currentQuestionIndex]);
 
   return (
-    <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
+    <div className="flex-col text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* Title */}
       {!quizStatus ? (
         <div>
@@ -107,18 +125,18 @@ const QuizRoom = () => {
 
       {/* if quiz status is false */}
       {!quizStatus ? (
-        <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[2vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.2)] rounded-xl shadow-md">
+        <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[6vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.2)] rounded-xl shadow-md">
           <p>{prompt}</p>
         </div>
       ) : (
         // quizstatus true means quiz has to start
-        <div className="flex [text-shadow:0_0_5px_rgba(0,0,0,0.5)]">
+        <div className="flex px-2">
           {/* left panel for leaderboard and player data */}
-          <div className="flex text-white text-center flex-col space-y-3 mx-2 w-1/5 m-[2vh] h-[88vh] rounded-xl">
+          <div className="flex text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
             {/* leaderboard */}
-            <div className="flex text-white text-center pl-2 pr-1 flex-col py-4 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+            <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
               <p className="text-2xl mb-4 ">Leaderboard</p>
-              <ul className="h-full overflow-scroll divide-y-2 divide-gray-500">
+              <ul className="h-full overflow-y-auto divide-y-2 divide-gray-500">
                 <li>a</li>
                 <li>a</li>
                 <li>a</li>
@@ -127,7 +145,7 @@ const QuizRoom = () => {
               </ul>
             </div>
             {/* player data */}
-            <div className="flex text-white text-center pl-2 pr-1 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+            <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
               <p className="text-2xl mb-4 ">:) {username}</p>
               <ul>
                 <li>Quiz: {loadedTitle}</li>
@@ -138,7 +156,7 @@ const QuizRoom = () => {
           </div>
 
           {/* quiz box - question panel */}
-          <div className="relative flex flex-col items-center mx-2 ml-1 w-[96vw] py-[2vh] justify-center my-[2vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
+          <div className="relative flex flex-col items-center w-[96vw] py-[2vh] justify-center my-[2vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
             {questions.length > 0 ? (
               <div className="text-white w-full h-full wx text-lg text-center">
                 {/* Timer Display */}
@@ -154,15 +172,16 @@ const QuizRoom = () => {
                 </h2>
 
                 {/* ques text */}
-                <p className="mx-16 mt-20 text-4xl [text-shadow:0_0_10px_black]">
+                <p className="mx-16 mt-20 text-6vh [text-shadow:0_0_10px_black]">
                   {questions[currentQuestionIndex].questionText}
                 </p>
                 {/* options */}
-                <div className="absolute w-full flex-wrap bottom-32 mt-6 space-y-4">
+                <div className="absolute w-full flex-wrap bottom-30 mt-6 space-y-4">
                   {questions[currentQuestionIndex].options.map(
                     (option, index) => (
                       <button
                         key={index}
+                        onClick={lockOption(currentQuestionIndex, index)}
                         className="w-2/5 py-2 h-12 px-4 mx-1 bg-[rgba(255,255,255,0.2)] text-center text-white rounded-md shadow-md hover:bg-[rgba(0,0,0,0.3)]"
                       >
                         {option}
