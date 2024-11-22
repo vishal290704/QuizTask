@@ -10,16 +10,6 @@ const QuizRoom = () => {
   // data from previous page
   let { roomCode, username } = useParams();
 
-  // lock option
-  let [currentQues, setCurrentQues] = useState("");
-  let [selected, setSelected] = useState("");
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
-  // let lockOption = (quesInd, opt) => {
-  //   console.log(quesInd + 1, "+", opt);
-  // };
-
-  // const currentQuestionIndex = 0;
-
   useEffect(() => {
     document.title = `${roomCode} - QuizSutra`;
   }, []);
@@ -31,6 +21,7 @@ const QuizRoom = () => {
   const [questions, setQuestions] = useState([]);
   let [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10); // question countdown default to 10 second
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState("");
 
   // axios fetch
   const fetchQuizStatus = async () => {
@@ -45,15 +36,21 @@ const QuizRoom = () => {
       }
     } catch (err) {
       console.error(err.message);
+      setPrompt("Failed to fetch quiz. Please retry again.");
     }
   };
 
-  const lockOption = (cuestionIndex, optionIndex) => () => {
-    console.log(optionIndex);
-    console.log(cuestionIndex);
-    
-    setSelectedOptionIndex(optionIndex); // Update the selected option index
+  // lock option
+  const lockOption = (questionIndex, optionIndex) => () => {
+    console.log(optionIndex, "+", questionIndex);
+
+    setSelectedOptionIndex(optionIndex);
   };
+
+  // clear selection
+  const clearSelection = () => {
+    setSelectedOptionIndex('')
+  }
 
   // useEffect to restart fetch if status false
   useEffect(() => {
@@ -61,7 +58,7 @@ const QuizRoom = () => {
     if (!quizStatus) {
       const timer = setInterval(() => {
         fetchQuizStatus();
-      }, 2000);
+      }, 1000);
 
       return () => clearInterval(timer);
     }
@@ -75,22 +72,32 @@ const QuizRoom = () => {
   // Automatically change questions and reset time
   useEffect(() => {
     if (quizStatus && questions.length > 0) {
-      const questionTimer = setInterval(() => {
-        if (currentQuestionIndex != 9) {
-          setCurrentQuestionIndex(
-            (prevIndex) => (prevIndex + 1) % questions.length
-          );
-          setTimeLeft(10); // Reset time to 10 seconds again
-        }
+      const quesTimer = setInterval(() => {
+        setCurrentQuestionIndex((prevIndex) => {
+          if (prevIndex < questions.length - 1) {
+            return prevIndex + 1; // Increment to the next question
+          } else {
+            clearInterval(quesTimer); // Clear the timer once all questions are done
+            return prevIndex; // Stay at the last question
+          }
+        });
+        console.log(currentQuestionIndex);
+
+        setTimeLeft(10); // Reset the timer
+        setSelectedOptionIndex(""); // Reset selected option
       }, 10000);
 
-      return () => clearInterval(questionTimer);
+      return () => clearInterval(quesTimer); // Cleanup
     }
-  }, [quizStatus, questions]);
+  }, [quizStatus, questions.length]);
 
   // 10 second timer
   useEffect(() => {
-    if (quizStatus && questions.length > 0) {
+    if (
+      quizStatus &&
+      questions.length > 0 &&
+      currentQuestionIndex < questions.length
+    ) {
       const countdown = setInterval(() => {
         setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
@@ -157,7 +164,8 @@ const QuizRoom = () => {
 
           {/* quiz box - question panel */}
           <div className="relative flex flex-col items-center w-[96vw] py-[2vh] justify-center my-[2vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
-            {questions.length > 0 ? (
+            {/* mapping questions */}
+            {questions.length > 0 && currentQuestionIndex < questions.length ? (
               <div className="text-white w-full h-full wx text-lg text-center">
                 {/* Timer Display */}
                 <div className="absolute top-4 right-4 py-[6px] px-[20px] font-bold bg-[rgba(255,255,255,0.2)] text-white text-xl rounded-xl shadow-md">
@@ -175,20 +183,36 @@ const QuizRoom = () => {
                 <p className="mx-16 mt-20 text-6vh [text-shadow:0_0_10px_black]">
                   {questions[currentQuestionIndex].questionText}
                 </p>
-                {/* options */}
+                {/* mapping options */}
                 <div className="absolute w-full flex-wrap bottom-30 mt-6 space-y-4">
                   {questions[currentQuestionIndex].options.map(
                     (option, index) => (
                       <button
                         key={index}
                         onClick={lockOption(currentQuestionIndex, index)}
-                        className="w-2/5 py-2 h-12 px-4 mx-1 bg-[rgba(255,255,255,0.2)] text-center text-white rounded-md shadow-md hover:bg-[rgba(0,0,0,0.3)]"
+                        className={`w-2/5 py-2 min-h-12 px-4 mx-1 ${
+                          selectedOptionIndex === index
+                            ? "bg-[rgba(255,255,255,0.5)]"
+                            : "bg-[rgba(255,255,255,0.2)]"
+                        } text-center text-white rounded-md shadow-md hover:${
+                          selectedOptionIndex === index
+                            ? "bg-[rgba(255,255,255,0.5)]"
+                            : "bg-[rgba(0,0,0,0.3)]"
+                        }`}
                       >
                         {option}
                       </button>
                     )
                   )}
                 </div>
+
+                {/* clear selection */}
+                <button 
+                  onClick={clearSelection}
+                  className="absolute bg-[rgba(0,0,0,0.3)] py-2 px-4 rounded-md text-sm bottom-2 right-2 shadow-md hover:bg-[rgba(0,0,0,0.1)]"
+                  >
+                  clear selection
+                </button>
               </div>
             ) : (
               <div className="text-white text-lg">Quiz is Loading...</div>
