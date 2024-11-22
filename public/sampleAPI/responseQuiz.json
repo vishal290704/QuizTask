@@ -1,7 +1,7 @@
 {
   "quizKey": "quiz1",
   "adminID": "admin123",
-  "status": true,
+  "status": false,
   "quizTitle": "CCC Quiz",
   "questions": [
     {
