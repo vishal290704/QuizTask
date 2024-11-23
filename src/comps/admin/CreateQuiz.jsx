@@ -116,13 +116,13 @@ const CreateQuiz = () => {
           <form onSubmit={registerAdmin}>
             <div className="mb-4 font-semibold">{prompt}</div>
             <div className="mb-4">
-              <label className="block text-sm font-medium">Admin ID:</label>
+              <label className="block text-sm font-medium">Admin Email:</label>
               <input
                 type="text"
                 value={adminid}
                 onChange={(e) => setAdmin(e.target.value)}
                 className="mt-1 block w-full border rounded-lg text-gray-600 border-gray-300 p-2 focus:outline"
-                placeholder="Enter a new admin ID"
+                placeholder="Enter an Email ID"
               />
             </div>
             <div className="mb-6">

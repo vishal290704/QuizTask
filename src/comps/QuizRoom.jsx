@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 // api url
 const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
@@ -109,7 +110,7 @@ const QuizRoom = () => {
   return (
     <div className="flex-col p-0 text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* Title  with quiz type*/}
-      {quizType == "live" || quizType == 'local' ? (
+      {quizType == "live" || quizType == "local" ? (
         // live quiz
         !quizStatus ? (
           <div>
@@ -139,26 +140,18 @@ const QuizRoom = () => {
       {
         // if local
         quizType == "local" ? (
-          <div className="flex px-2">
+          quizStatus ? (
+            <div className="flex px-2">
               {/* left panel for leaderboard and player data */}
               <div className="flex text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
-                {/* leaderboard */}
-                <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
-                  <p className="text-2xl mb-4 ">Leaderboard</p>
-                  <ul className="h-full overflow-y-auto divide-y-2 divide-gray-500">
-                    <li>a</li>
-                    <li>a</li>
-                    <li>a</li>
-                    <li>a</li>
-                    <li>a</li>
-                  </ul>
-                </div>
                 {/* player data */}
                 <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
-                  <p className="text-2xl mb-4 ">:) {username}</p>
+                  <p className="text-2xl mb-4 ">:) stats</p>
                   <ul>
                     <li>Quiz: {loadedTitle}</li>
-                    <li>Room Code: {roomCode}</li>
+                    <li>
+                      Category: {questions[currentQuestionIndex].category || ""}
+                    </li>
                     <li>Total Questions: {questions.length}</li>
                   </ul>
                 </div>
@@ -172,10 +165,7 @@ const QuizRoom = () => {
                   <div className="text-white w-full h-full wx text-lg text-center">
                     {/* Timer Display */}
                     <div className="absolute top-4 right-4 py-[6px] px-[20px] font-bold bg-[rgba(255,255,255,0.2)] text-white text-xl rounded-xl shadow-md">
-                      <FontAwesomeIcon
-                        icon="fa-solid fa-clock"
-                        className="mr-2"
-                      />
+                      <FontAwesomeIcon icon={faClock} className="mr-2" />
                       {timeLeft}
                     </div>
 
@@ -225,6 +215,9 @@ const QuizRoom = () => {
                 )}
               </div>
             </div>
+          ) : (
+            <div className="text-white text-lg">Quiz is Loading...</div>
+          )
         ) : // if livbe
         quizType == "live" ? (
           !quizStatus ? (
