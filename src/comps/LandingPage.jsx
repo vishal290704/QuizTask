@@ -8,8 +8,7 @@ const LandingPage = () => {
 
   const joinRoom = () => {
     if (username && roomCode) {
-      // navigate('"/room", { state: { username, roomCode } }');
-      navigate(`/room/${roomCode}/${username}`);
+      navigate(`/room/${'live'}/${roomCode}/${username}`);
     } else {
       alert("Enter username and invite code to continue");
     }
