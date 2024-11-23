@@ -1,8 +1,6 @@
 {
-  "roomKey": "room1",
   "quizKey": "quiz1",
-  "roomTitle": "Sample Quiz Room",
   "adminID": "testAdmin",
-  "players": ["Akash", "Saurabh","Rohani", "Vishal", "Aniket"],
-  "status": "active"
+  "players": ["Akash", "Saurabh", "Rohani", "Vishal", "Aniket"],
+  "status": true
 }

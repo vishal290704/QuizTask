@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 // API URLs
-let registerUrl = "/api/admin/register";
+let registerUrl = "https://quizapp-r80t.onrender.com/admin/register";
 let createQuizUrl = "/api/admin/create-quiz";
 
 // sample id
@@ -36,14 +36,14 @@ const CreateQuiz = () => {
       return;
     }
 
-    const userData = {
+    const signupData = {
       admin: adminid,
       password: adminpass,
     };
 
     try {
       setBtnTxt("...");
-      const response = await axios.post(registerUrl, userData, {
+      const response = await axios.post(registerUrl, signupData, {
         headers: { "Content-Type": "application/json" },
       });
       console.log(response.data);
