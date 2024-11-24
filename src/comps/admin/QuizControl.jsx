@@ -94,7 +94,7 @@ const QuizControl = ({ quizId }) => {
   return (
     <div className="flex flex-col h-screen bg-gradient-to-t from-violet-500 to-fuchsia-500">
       {/* title */}
-      <h1 className="text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
+      <h1 className="text-[5vw] pt-2 md:text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
         QUIZ CONTROL
       </h1>
 
@@ -110,10 +110,10 @@ const QuizControl = ({ quizId }) => {
         </div>
       </Link>
 
-{/* check if logged in */}
+      {/* check if logged in */}
       {!isLoggedIn ? (
         // panel
-        <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
+        <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
           <form onSubmit={authenticateAdmin}>
             <div className="mb-4 text-center font-semibold">{prompt}</div>
             <div className="mb-4">
@@ -148,10 +148,11 @@ const QuizControl = ({ quizId }) => {
           </form>
         </div>
       ) : (
-        <div className="flex h-[90vh]">
+        <div className="flex flex-col md:flex-row h-[90vh]">
           {/* Left Panel */}
-          <div className="flex text-white flex-col p-6 bg-[rgba(0,0,0,0.3)] my-[2vh] rounded-lg mx-2 shadow-lg w-4/5">
-            <div className="flex justify-between items-center mb-6 p-4 pr-6 bg-[rgba(255,255,255,0.3)] shadow-lg rounded-lg">
+          <div className="flex text-white flex-col p-6 bg-[rgba(0,0,0,0.3)] my-[2vh] rounded-lg mx-2 shadow-lg w-5/5 md:w-4/5">
+            {/* top */}
+            <div className="flex flex-col md:flex-row justify-between items-center mb-6 p-4 md:pr-6 bg-[rgba(255,255,255,0.3)] shadow-lg rounded-lg">
               <div>
                 <h2 className="text-3xl font-semibold">Quiz: {quizTitle}</h2>
               </div>
@@ -167,11 +168,11 @@ const QuizControl = ({ quizId }) => {
             {/* buttons for action */}
             <div className="p-4 shadow-lg bg-[rgba(255,255,255,0.3)] rounded-lg">
               <h3 className="text-2xl font-semibold mb-4">Quiz Controls</h3>
-              <div className="flex justify-between">
+              <div className="flex flex-col sm:flex-row justify-between">
                 <button
                   onClick={() => controlQuiz("start")}
                   disabled={loading || status === "Started"}
-                  className={`px-4 py-2 rounded-lg text-white ${
+                  className={`px-4 py-2 max-w-48 rounded-lg text-white ${
                     status === "Started"
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-purple-700 hover:bg-purple-500"
@@ -184,7 +185,7 @@ const QuizControl = ({ quizId }) => {
                 <button
                   onClick={() => controlQuiz("stop")}
                   disabled={loading || status === "Stopped"}
-                  className={`px-4 py-2 rounded-lg text-white ${
+                  className={`px-4 py-2 max-w-48 rounded-lg text-white ${
                     status === "Stopped"
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-red-700 hover:bg-red-500"
@@ -202,7 +203,7 @@ const QuizControl = ({ quizId }) => {
           </div>
 
           {/* Right Panel */}
-          <div className="w-1/5 p-3 bg-gray-50 shadow-md rounded-lg mr-2 my-[2vh]">
+          <div className="w-5/5 md:w-1/5 p-3 bg-gray-50 shadow-md rounded-lg mr-2 md:mr-2 ml-2 md:ml-0 my-[2vh]">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Players : {players.length}</h3>
               <button

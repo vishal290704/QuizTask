@@ -43,8 +43,8 @@ const CreateQuiz = () => {
 
     try {
       setBtnTxt("...");
-      console.log("Admin ID:", adminid); // Should print "aditya@mail.in"
-console.log("Admin Password:", adminpass); // Should print "12345"
+      console.log("Admin ID:", adminid);
+      console.log("Admin Password:", adminpass);
 
       let response = await axios.post(registerUrl, signupData, {
         headers: { "Content-Type": "application/json" },
@@ -60,7 +60,7 @@ console.log("Admin Password:", adminpass); // Should print "12345"
     }
   };
 
-  // Add a new question
+  // Add question
   const addQuestion = () => {
     setQuestions([
       ...questions,
@@ -98,7 +98,7 @@ console.log("Admin Password:", adminpass); // Should print "12345"
   return (
     <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* title */}
-      <h1 className="text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
+      <h1 className="text-[5vw] pt-2 md:text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
         CREATE NEW QUIZ
       </h1>
 
@@ -161,7 +161,7 @@ console.log("Admin Password:", adminpass); // Should print "12345"
               />
             </div>
 
-            {/* Status checkbox */}
+            {/* Status */}
             <div className="mb-4">
               <label className="inline-flex items-center">
                 <input
