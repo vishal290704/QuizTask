@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 // API URLs
 const createQuizUrl = "https://quizapp-r80t.onrender.com/admin/createQuiz";
@@ -18,7 +20,6 @@ const CreateQuiz = () => {
   // State management
   const [quizTitle, setQuizTitle] = useState("");
   const [questions, setQuestions] = useState([]);
-  const [quizId, setquizId] = useState("");
   const [token, setToken] = useState("");
 
   // Admin authentication states
@@ -28,6 +29,10 @@ const CreateQuiz = () => {
   const [prompt, setPrompt] = useState("Login to continue");
   const [btnTxt, setBtnTxt] = useState("Login");
   const [actionStatus, setActionStatus] = useState(true);
+
+  // quiz creating
+  const [quizSuccess, setQuizSuccess] = useState("");
+  const [quizId, setquizId] = useState("");
 
   // Authenticate admin
   const authenticateAdmin = async (e) => {
@@ -44,6 +49,7 @@ const CreateQuiz = () => {
       password: adminpass,
     };
 
+    // login
     try {
       setBtnTxt("...");
       let response = await axios.post(loginUrl, loginData, {
@@ -95,12 +101,15 @@ const CreateQuiz = () => {
       const response = await axios.post(createQuizUrl, quizData, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       });
 
+      setQuizSuccess(
+        `Quiz created successfully! Your Quiz ID is: ${response.data.quizId}`
+      );
       setquizId(response.data.quizId);
-      alert(
+      message(
         `Quiz created successfully! Your Quiz ID is: ${response.data.quizId}`
       );
 
@@ -276,6 +285,20 @@ const CreateQuiz = () => {
                 Submit Quiz
               </button>
             </div>
+
+            {/* Display =quiz ID */}
+            {quizSuccess ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="text-green-600"
+                />
+                Quiz created successfully Quiz ID - {quizId}
+                Share Quiz ID with players for the quiz
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         )}
       </div>
