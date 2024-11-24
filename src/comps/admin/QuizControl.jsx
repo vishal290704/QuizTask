@@ -150,7 +150,7 @@ const QuizControl = ({ quizId }) => {
       ) : (
         <div className="flex flex-col md:flex-row h-[90vh]">
           {/* Left Panel */}
-          <div className="flex text-white flex-col p-6 bg-[rgba(0,0,0,0.3)] my-[2vh] rounded-lg mx-2 shadow-lg w-5/5 md:w-4/5">
+          <div className="flex text-white flex-col p-6 bg-[rgba(0,0,0,0.3)] md:my-[2vh] mt-6 rounded-lg mx-2 shadow-lg w-5/5 md:w-4/5">
             {/* top */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6 p-4 md:pr-6 bg-[rgba(255,255,255,0.3)] shadow-lg rounded-lg">
               <div>

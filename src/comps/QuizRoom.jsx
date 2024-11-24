@@ -107,6 +107,25 @@ const QuizRoom = () => {
     }
   }, [quizStatus, questions, currentQuestionIndex]);
 
+  // show stats in phone
+  let isOpen = false;
+  let showStats = () => {
+    let items = document.querySelector(".statMenu");
+    let button = document.querySelector(".stats");
+
+    if (isOpen) {
+      items.style.display = "none";
+      button.style.color = "white";
+      button.style.backgroundColor = "rgba(0,0,0,0.4)";
+      isOpen = false;
+    } else {
+      items.style.display = "block";
+      button.style.backgroundColor = "rgba(255,255,255,0.4)";
+      button.style.color = "black";
+      isOpen = true;
+    }
+  };
+
   return (
     <div className="flex-col p-0 text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* Title  with quiz type*/}
@@ -136,6 +155,37 @@ const QuizRoom = () => {
         </div>
       </Link>
 
+      <div
+        onClick={showStats}
+        className="stats hover:cursor-pointer block md:hidden absolute p-[12px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md"
+      >
+        STATS
+      </div>
+
+      <div className="statMenu z-50 hidden absolute p-[12px] font-bold text-white top-16 right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+        {quizType == "local" ? (
+          <>
+            <p className="text-2xl mb-4 ">: stats</p>
+            <ul>
+              <li>Quiz: {loadedTitle}</li>
+              <li>
+                Category: {questions[currentQuestionIndex].category || ""}
+              </li>
+              <li>Total Questions: {questions.length}</li>
+            </ul>
+          </>
+        ) : (
+          <>
+            <p className="text-2xl mb-4 ">: {username}</p>
+            <ul>
+              <li>Quiz: {loadedTitle}</li>
+              <li>Room Code: {roomCode}</li>
+              <li>Total Questions: {questions.length}</li>
+            </ul>
+          </>
+        )}
+      </div>
+
       {/* decide quiz type */}
       {
         // if local
@@ -143,7 +193,7 @@ const QuizRoom = () => {
           quizStatus ? (
             <div className="flex px-2">
               {/* left panel for leaderboard and player data */}
-              <div className="flex text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
+              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
                 {/* player data */}
                 <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) stats</p>
@@ -241,7 +291,7 @@ const QuizRoom = () => {
                   </ul>
                 </div>
                 {/* player data */}
-                <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+                <div className="md:flex hidden text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) {username}</p>
                   <ul>
                     <li>Quiz: {loadedTitle}</li>
@@ -259,10 +309,7 @@ const QuizRoom = () => {
                   <div className="text-white w-full h-full wx text-lg text-center">
                     {/* Timer Display */}
                     <div className="absolute top-4 right-4 py-[6px] px-[20px] font-bold bg-[rgba(255,255,255,0.2)] text-white text-xl rounded-xl shadow-md">
-                      <FontAwesomeIcon
-                        icon="fa-solid fa-clock"
-                        className="mr-2"
-                      />
+                      <FontAwesomeIcon icon={faClock} className="mr-2" />
                       {timeLeft}
                     </div>
 
