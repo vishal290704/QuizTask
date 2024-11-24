@@ -3,8 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 // Sample API
-const quizDataUrl = "/sampleAPI/responseQuiz.json";
-const roomUrl = "/sampleAPI/sampleRoom.json";
+const loginUrl = "https://quizapp-r80t.onrender.com/admin/login";
 
 // Sample for testing
 const SAMPLE_ADMIN_ID = "testAdmin";
@@ -29,7 +28,7 @@ const QuizControl = ({ quizId }) => {
   const [actionStatus, setActionStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Authenticate Admin
+  // authenticate admin
   const authenticateAdmin = async (e) => {
     e.preventDefault();
 
@@ -38,22 +37,30 @@ const QuizControl = ({ quizId }) => {
       return;
     }
 
-    const userData = {
-      admin: adminid,
+    const loginData = {
+      adminId: adminid,
       password: adminpass,
     };
 
     try {
       setBtnTxt("...");
-      const response = await axios.post(loginUrl, userData, {
+      let response = await axios.post(loginUrl, loginData, {
         headers: { "Content-Type": "application/json" },
       });
+
       console.log(response.data);
-      setPrompt("Registration successful. Proceed to create your quiz.");
+
+      let { quizTitle, quizKey, status, players } = response.data;
+
+      // states
+      setQuizTitle(quizTitle || "Loading");
+      setQuizKey(quizKey || "Loading");
+      setStatus(status || "Loading");
+      setPlayers(players || []);
+      setPrompt("Login successful. Welcome!");
       setIsLoggedIn(true);
-      fetchQuizData();
-      fetchPlayers();
     } catch (error) {
+      console.error(error);
       console.error(error.response.data);
       setPrompt("Invalid ID or Password");
     } finally {
@@ -61,49 +68,18 @@ const QuizControl = ({ quizId }) => {
     }
   };
 
-  // Fetch basic quiz data
-  const fetchQuizData = async () => {
+  const refreshPlayers = async () => {
     try {
-      const response = await axios.get(quizDataUrl, { quizId });
-      setQuizTitle(response.data.quizTitle);
-      console.log(quizTitle);
-      setQuizKey(response.data.quizKey);
-      setStatus(response.data.status || "Not Started");
-    } catch (error) {
-      console.error("Error fetching quiz data:", error.message);
-    }
-  };
-
-  // Fetch players data
-
-  const fetchPlayers = async () => {
-    try {
-      const response = await axios.get(roomUrl);
-      console.log(response.data);
-      setPlayers(response.data.players);
-    } catch (error) {
-      console.error("Error fetching players:", error.message);
-    }
-  };
-
-  // Control quiz
-  const controlQuiz = async (action) => {
-    setLoading(true);
-    setActionStatus("");
-
-    try {
-      const response = await axios.post(controlQuizUrl, {
-        quizId,
-        action,
+      setLoading(true);
+      const response = await axios.post(loginUrl, {
+        adminId: adminid,
+        password: adminpass,
       });
-
-      setStatus(action === "start" ? "Started" : "Stopped");
-      setActionStatus(response.data.message || "Action successful.");
+      setPlayers(response.data.players || []);
+      setActionStatus("Player list refreshed!");
     } catch (error) {
-      setActionStatus(
-        error.response?.data?.message || "Failed to perform the action."
-      );
-      console.error("Error controlling quiz:", error.message);
+      console.error("Error refreshing players:", error.message);
+      setActionStatus("Failed to refresh player list.");
     } finally {
       setLoading(false);
     }
@@ -111,10 +87,9 @@ const QuizControl = ({ quizId }) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetchQuizData();
-      fetchPlayers();
+      console.log("Admin logged in, quiz data and players set.");
     }
-  }, [isLoggedIn, quizId]);
+  }, [isLoggedIn]);
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-t from-violet-500 to-fuchsia-500">
@@ -135,6 +110,7 @@ const QuizControl = ({ quizId }) => {
         </div>
       </Link>
 
+{/* check if logged in */}
       {!isLoggedIn ? (
         // panel
         <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
@@ -177,7 +153,7 @@ const QuizControl = ({ quizId }) => {
           <div className="flex text-white flex-col p-6 bg-[rgba(0,0,0,0.3)] my-[2vh] rounded-lg mx-2 shadow-lg w-4/5">
             <div className="flex justify-between items-center mb-6 p-4 pr-6 bg-[rgba(255,255,255,0.3)] shadow-lg rounded-lg">
               <div>
-                <h2 className="text-3xl font-semibold">{quizTitle}</h2>
+                <h2 className="text-3xl font-semibold">Quiz: {quizTitle}</h2>
               </div>
               <div>
                 <p>
@@ -230,7 +206,7 @@ const QuizControl = ({ quizId }) => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold">Players : {players.length}</h3>
               <button
-                onClick={fetchPlayers}
+                onClick={refreshPlayers}
                 className="bg-purple-700 text-white px-2 py-1 rounded-lg hover:bg-purple-500"
               >
                 Refresh

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 // API URLs
 let registerUrl = "https://quizapp-r80t.onrender.com/admin/register";
@@ -36,20 +36,24 @@ const CreateQuiz = () => {
       return;
     }
 
-    const signupData = {
-      admin: adminid,
+    let signupData = {
+      adminId: adminid,
       password: adminpass,
     };
 
     try {
       setBtnTxt("...");
-      const response = await axios.post(registerUrl, signupData, {
+      console.log("Admin ID:", adminid); // Should print "aditya@mail.in"
+console.log("Admin Password:", adminpass); // Should print "12345"
+
+      let response = await axios.post(registerUrl, signupData, {
         headers: { "Content-Type": "application/json" },
       });
       console.log(response.data);
       setIsRegistered(true);
     } catch (error) {
-      console.error(error.message);
+      console.log(error);
+      console.error(error.data);
       setPrompt("Registration failed. Try again.");
     } finally {
       setBtnTxt("Continue");
@@ -145,7 +149,9 @@ const CreateQuiz = () => {
         ) : (
           <div className="w-3/5">
             <div className="mb-1">
-              <label className="block text-[2md] font-medium">Quiz Title:</label>
+              <label className="block text-[2md] font-medium">
+                Quiz Title:
+              </label>
               <input
                 type="text"
                 value={quizTitle}
@@ -164,7 +170,9 @@ const CreateQuiz = () => {
                   onChange={(e) => setStatus(e.target.checked)}
                   className="form-checkbox"
                 />
-                <span className="ml-2 text-md font-medium">Start quiz Instantly</span>
+                <span className="ml-2 text-md font-medium">
+                  Start quiz Instantly
+                </span>
               </label>
             </div>
 
@@ -193,7 +201,8 @@ const CreateQuiz = () => {
                         value={opt}
                         onChange={(e) => {
                           const newQuestions = [...questions];
-                          newQuestions[index].options[optIndex] = e.target.value;
+                          newQuestions[index].options[optIndex] =
+                            e.target.value;
                           setQuestions(newQuestions);
                         }}
                         placeholder={`Option ${optIndex + 1}`}
