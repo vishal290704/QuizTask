@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 // api url
-const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
+const fetchQuizUrl = "https://quizapp-r80t.onrender.com/QuizEntry/enter";
 
 const QuizRoom = () => {
   // data from previous page
@@ -33,6 +33,12 @@ const QuizRoom = () => {
 
   // axios fetch live
   const fetchQuizStatus = async () => {
+
+    const userData = {
+      username: username,
+      quizId: roomCode,
+    };
+
     try {
       if (quizType === "local") {
         const response = await axios.get(catUrl);
@@ -46,7 +52,9 @@ const QuizRoom = () => {
           setStatus(false);
         }
       } else if (quizType === "live") {
-        const response = await axios.get(fetchQuizUrl);
+        const response = await axios.get(fetchQuizUrl, userData, {
+          headers: { "Content-Type": "application/json" },
+        });
         setStatus(response.data.status || true);
         setTitle(response.data.quizTitle);
         if (response.data.status) {
