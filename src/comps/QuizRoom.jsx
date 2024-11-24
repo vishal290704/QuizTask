@@ -222,7 +222,6 @@ const QuizRoom = () => {
       </button>
 
       <div className="statMenu z-50 hidden absolute p-[12px] font-bold text-white top-16 right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
-        x{" "}
         {quizType == "local" ? (
           <>
             <p className="text-2xl mb-4 ">:) stats</p>
@@ -234,7 +233,7 @@ const QuizRoom = () => {
           </>
         ) : (
           <>
-            <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+            {/* <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
               <p className="text-2xl mb-4 ">Leaderboard</p>
               <ul className="h-full overflow-y-auto divide-y-2 divide-gray-500">
                 <li>a</li>
@@ -243,7 +242,7 @@ const QuizRoom = () => {
                 <li>a</li>
                 <li>a</li>
               </ul>
-            </div>
+            </div> */}
             <p className="text-2xl mb-4 ">:) {username}</p>
             <ul>
               <li>Quiz: {loadedTitle}</li>
@@ -346,7 +345,7 @@ const QuizRoom = () => {
               {/* left panel for leaderboard and player data */}
               <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 my-[1vh] h-[88vh] rounded-xl">
                 {/* leaderboard */}
-                <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+                {/* <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">Leaderboard</p>
                   <ul className="h-full overflow-y-auto divide-y-2 divide-gray-500">
                     <li>a</li>
@@ -355,7 +354,7 @@ const QuizRoom = () => {
                     <li>a</li>
                     <li>a</li>
                   </ul>
-                </div>
+                </div> */}
                 {/* player data */}
                 <div className="text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) {username}</p>
