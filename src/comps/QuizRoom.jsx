@@ -9,7 +9,9 @@ const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
 
 const QuizRoom = () => {
   // data from previous page
-  let { quizType, roomCode, username } = useParams();
+  let { quizType, roomCode, username, title } = useParams();
+
+  const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
 
   useEffect(() => {
     document.title = `${roomCode} - QuizSutra`;
@@ -24,34 +26,43 @@ const QuizRoom = () => {
   const [timeLeft, setTimeLeft] = useState(10); // question countdown default to 10 second
   const [selectedOptionIndex, setSelectedOptionIndex] = useState("");
 
-  // axios fetch
+  // axios fetch live
   const fetchQuizStatus = async () => {
     try {
-      const response = await axios.get(fetchQuizUrl);
-      setStatus(response.data.status);
-      setTitle(response.data.quizTitle);
-      if (response.data.status) {
-        setQuestions(response.data.questions);
-      } else {
-        setPrompt("Waiting for the admin to start");
+      if (quizType === "local") {
+        const response = await axios.get(catUrl);
+        if (response.data.length > 0) {
+          setQuestions(response.data);
+          setTitle(title)
+          setStatus(true); // Set quizStatus true once questions are loaded
+          setPrompt(""); // Clear any loading messages
+        } else {
+          setPrompt("No questions available.");
+          setStatus(false);
+        }
+      } else if (quizType === "live") {
+        const response = await axios.get(fetchQuizUrl);
+        setStatus(response.data.status);
+        setTitle(response.data.quizTitle);
+        if (response.data.status) {
+          setQuestions(response.data.questions);
+          setPrompt(""); // Clear any loading messages
+        } else {
+          setPrompt("Waiting for the admin to start");
+        }
       }
     } catch (err) {
       console.error(err.message);
-      setPrompt("Failed to fetch quiz. Please retry again.");
+      setPrompt("Failed to fetch quiz. Please retry.");
     }
   };
+  
 
-  // lock option
-  const lockOption = (questionIndex, optionIndex) => () => {
-    console.log(optionIndex, "+", questionIndex);
-
-    setSelectedOptionIndex(optionIndex);
-  };
-
-  // clear selection
-  const clearSelection = () => {
-    setSelectedOptionIndex("");
-  };
+  useEffect(() => {
+    if (quizType === "local" && !quizStatus) {
+      fetchQuizStatus();
+    }
+  }, [quizType, quizStatus]);
 
   // useEffect to restart fetch if status false
   useEffect(() => {
@@ -69,6 +80,18 @@ const QuizRoom = () => {
   useEffect(() => {
     fetchQuizStatus();
   }, []);
+
+  // lock option
+  const lockOption = (questionIndex, optionIndex) => () => {
+    console.log(optionIndex, "+", questionIndex);
+
+    setSelectedOptionIndex(optionIndex);
+  };
+
+  // clear selection
+  const clearSelection = () => {
+    setSelectedOptionIndex("");
+  };
 
   // Automatically change questions and reset time
   useEffect(() => {
@@ -139,7 +162,7 @@ const QuizRoom = () => {
           </div>
         ) : (
           <div>
-            <h1 className="text-[5vh] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
+            <h1 className="text-[5vw] pt-5 md:text-[3em] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
               {loadedTitle}
             </h1>
           </div>
@@ -155,28 +178,38 @@ const QuizRoom = () => {
         </div>
       </Link>
 
-      <div
+      <button
         onClick={showStats}
         className="stats hover:cursor-pointer block md:hidden absolute p-[12px] font-bold text-white top-[12px] right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md"
       >
         STATS
-      </div>
+      </button>
 
       <div className="statMenu z-50 hidden absolute p-[12px] font-bold text-white top-16 right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
         {quizType == "local" ? (
           <>
-            <p className="text-2xl mb-4 ">: stats</p>
+            <p className="text-2xl mb-4 ">:) stats</p>
             <ul>
-              <li>Quiz: {loadedTitle}</li>
+              <li>Quiz: {loadedTitle || title}</li>
               <li>
-                Category: {questions[currentQuestionIndex].category || ""}
+                Category: {roomCode}
               </li>
               <li>Total Questions: {questions.length}</li>
             </ul>
           </>
         ) : (
           <>
-            <p className="text-2xl mb-4 ">: {username}</p>
+            <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+              <p className="text-2xl mb-4 ">Leaderboard</p>
+              <ul className="h-full overflow-y-auto divide-y-2 divide-gray-500">
+                <li>a</li>
+                <li>a</li>
+                <li>a</li>
+                <li>a</li>
+                <li>a</li>
+              </ul>
+            </div>
+            <p className="text-2xl mb-4 ">:) {username}</p>
             <ul>
               <li>Quiz: {loadedTitle}</li>
               <li>Room Code: {roomCode}</li>
@@ -198,9 +231,9 @@ const QuizRoom = () => {
                 <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) stats</p>
                   <ul>
-                    <li>Quiz: {loadedTitle}</li>
+                    <li>Quiz: {title}</li>
                     <li>
-                      Category: {questions[currentQuestionIndex].category || ""}
+                      Category: {roomCode || ""}
                     </li>
                     <li>Total Questions: {questions.length}</li>
                   </ul>
@@ -278,7 +311,7 @@ const QuizRoom = () => {
             // quizstatus true means quiz has to start
             <div className="flex px-2">
               {/* left panel for leaderboard and player data */}
-              <div className="flex text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
+              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
                 {/* leaderboard */}
                 <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">Leaderboard</p>
@@ -291,7 +324,7 @@ const QuizRoom = () => {
                   </ul>
                 </div>
                 {/* player data */}
-                <div className="md:flex hidden text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
+                <div className="text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) {username}</p>
                   <ul>
                     <li>Quiz: {loadedTitle}</li>
@@ -371,7 +404,7 @@ const QuizRoom = () => {
       {/* if quiz status is false */}
       {}
     </div>
-  );
+  );  
 };
 
 export default QuizRoom;

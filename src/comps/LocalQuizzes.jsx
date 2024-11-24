@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 // api url
-const fetchLocalQuizzesUrl = "/sampleAPI/localQuiz.json";
+const offlineList = "/sampleAPI/localQuiz.json";
 
 const LocalQuizzes = () => {
   // states
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [title, setTitle] = useState(true);
 
   // fetch
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get(fetchLocalQuizzesUrl);
+      const response = await axios.get(offlineList);
       setQuizzes(response.data.quizzes || []);
       setLoading(false);
       console.log("req");
@@ -34,7 +35,7 @@ const LocalQuizzes = () => {
     <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* Title */}
       <div>
-        <h1 className="text-[5vh] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
+        <h1 className="text-[5vw] pt-2 md:text-[3em] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
           Local Quizzes
         </h1>
       </div>
@@ -61,11 +62,14 @@ const LocalQuizzes = () => {
                   <p className="text-2xl font-bold">{quiz.title}</p>
                   <p className="text-md">Category: {quiz.category}</p>
                 </div>
-                <Link 
-                // to={`/quiz/${quiz.quizKey}`}
-                to = {`/room/${'local'}/${quiz.quizKey}/${'web'}`}
-                 className="text-white">
-                  <button className="py-2 px-4 bg-[rgba(255,255,255,0.5)] hover:bg-[rgba(255,255,255,0.3)] text-white font-bold rounded-lg">
+                <Link
+                  // to={`/quiz/${quiz.quizKey}`}
+                  to={`/room/${"local"}/${quiz.category}/${"web"}/${quiz.title}`}
+                  className="text-white"
+                >
+                  <button
+                    className="py-2 px-4 bg-[rgba(255,255,255,0.5)] hover:bg-[rgba(255,255,255,0.3)] text-white font-bold rounded-lg"
+                  >
                     Join Quiz
                   </button>
                 </Link>
