@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
+// import useHistory
 
 // api url
 const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
@@ -10,9 +11,9 @@ const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
 const QuizRoom = () => {
   // data from previous page
   let { quizType, roomCode, username, title } = useParams();
+  const navigate = useNavigate();
 
   const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
-
   useEffect(() => {
     document.title = `${roomCode} - QuizSutra`;
   }, []);
@@ -25,6 +26,10 @@ const QuizRoom = () => {
   let [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(10); // question countdown default to 10 second
   const [selectedOptionIndex, setSelectedOptionIndex] = useState("");
+  const [score, setScore] = useState(0);
+  const [correctAns, setCorrectAns] = useState(0);
+  const [incorrectAns, setinCorrectAns] = useState(0);
+  const [streak, setStreak] = useState(0);
 
   // axios fetch live
   const fetchQuizStatus = async () => {
@@ -33,7 +38,7 @@ const QuizRoom = () => {
         const response = await axios.get(catUrl);
         if (response.data.length > 0) {
           setQuestions(response.data);
-          setTitle(title)
+          setTitle(title);
           setStatus(true); // Set quizStatus true once questions are loaded
           setPrompt(""); // Clear any loading messages
         } else {
@@ -56,7 +61,6 @@ const QuizRoom = () => {
       setPrompt("Failed to fetch quiz. Please retry.");
     }
   };
-  
 
   useEffect(() => {
     if (quizType === "local" && !quizStatus) {
@@ -93,27 +97,59 @@ const QuizRoom = () => {
     setSelectedOptionIndex("");
   };
 
-  // Automatically change questions and reset time
+  // change questions over time of 10 seconds
   useEffect(() => {
     if (quizStatus && questions.length > 0) {
       const quesTimer = setInterval(() => {
+        if (currentQuestionIndex == questions.length - 1 && timeLeft == 0) {
+          navigate("/results", {
+            state: {
+              score,
+              correctAns,
+              streak,
+              incorrectAns,
+              roomCode,
+              username,
+            },
+          });
+        }
+
+        if (
+          selectedOptionIndex !== null &&
+          questions[currentQuestionIndex].options[selectedOptionIndex] ==
+            questions[currentQuestionIndex].correctAnswer
+        ) {
+          setScore((prevScore) => {
+            console.log("Score updated:", prevScore + 1);
+            return prevScore + 1;
+          });
+          setCorrectAns((prevScore) => prevScore + 1);
+          setStreak((prevScore) => prevScore + 1);
+        } else {
+          setStreak(0);
+          setinCorrectAns((prev) => prev + 1);
+        }
         setCurrentQuestionIndex((prevIndex) => {
           if (prevIndex < questions.length - 1) {
-            return prevIndex + 1; // Increment to the next question
+            return prevIndex + 1;
           } else {
-            clearInterval(quesTimer); // Clear the timer once all questions are done
-            return prevIndex; // Stay at the last question
+            clearInterval(quesTimer);
+            return prevIndex;
           }
         });
-        console.log(currentQuestionIndex);
-
-        setTimeLeft(10); // Reset the timer
-        setSelectedOptionIndex(""); // Reset selected option
+        setTimeLeft(10);
+        setSelectedOptionIndex(null);
       }, 10000);
-
-      return () => clearInterval(quesTimer); // Cleanup
+      return () => clearInterval(quesTimer);
     }
-  }, [quizStatus, questions.length]);
+  }, [
+    quizStatus,
+    currentQuestionIndex,
+    questions,
+    navigate,
+    questions.length,
+    selectedOptionIndex,
+  ]);
 
   // 10 second timer
   useEffect(() => {
@@ -186,14 +222,13 @@ const QuizRoom = () => {
       </button>
 
       <div className="statMenu z-50 hidden absolute p-[12px] font-bold text-white top-16 right-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
+        x{" "}
         {quizType == "local" ? (
           <>
             <p className="text-2xl mb-4 ">:) stats</p>
             <ul>
               <li>Quiz: {loadedTitle || title}</li>
-              <li>
-                Category: {roomCode}
-              </li>
+              <li>Category: {roomCode}</li>
               <li>Total Questions: {questions.length}</li>
             </ul>
           </>
@@ -226,15 +261,13 @@ const QuizRoom = () => {
           quizStatus ? (
             <div className="flex px-2">
               {/* left panel for leaderboard and player data */}
-              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 mt-[2vh] h-[88vh] rounded-xl">
+              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[1vh] h-[88vh] rounded-xl">
                 {/* player data */}
                 <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) stats</p>
                   <ul>
                     <li>Quiz: {title}</li>
-                    <li>
-                      Category: {roomCode || ""}
-                    </li>
+                    <li>Category: {roomCode || ""}</li>
                     <li>Total Questions: {questions.length}</li>
                   </ul>
                 </div>
@@ -404,7 +437,7 @@ const QuizRoom = () => {
       {/* if quiz status is false */}
       {}
     </div>
-  );  
+  );
 };
 
 export default QuizRoom;

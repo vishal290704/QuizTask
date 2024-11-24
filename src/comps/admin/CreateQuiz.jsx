@@ -27,7 +27,7 @@ const CreateQuiz = () => {
   const [adminpass, setAdminPass] = useState("");
   const [prompt, setPrompt] = useState("Login to continue");
   const [btnTxt, setBtnTxt] = useState("Login");
-  const [actionStatus, setActionStatus] = useState("");
+  const [actionStatus, setActionStatus] = useState(true);
 
   // Authenticate admin
   const authenticateAdmin = async (e) => {
@@ -85,7 +85,8 @@ const CreateQuiz = () => {
     }
 
     const quizData = {
-      adminid: adminid,
+      adminId: adminid,
+      status: actionStatus,
       quizTitle: quizTitle,
       questions: questions,
     };
@@ -138,7 +139,7 @@ const CreateQuiz = () => {
       <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
         {!isLoggedIn ? (
           // Login Panel
-          <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
+          <div className="flex flex-col w-3/5 mx-auto">
             <form onSubmit={authenticateAdmin}>
               <div className="mb-4 text-center font-semibold">{prompt}</div>
               <div className="mb-4">

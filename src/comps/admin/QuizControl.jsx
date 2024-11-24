@@ -27,6 +27,7 @@ const QuizControl = ({ quizId }) => {
   const [status, setStatus] = useState("Loading...");
   const [actionStatus, setActionStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   // authenticate admin
   const authenticateAdmin = async (e) => {
@@ -47,17 +48,9 @@ const QuizControl = ({ quizId }) => {
       let response = await axios.post(loginUrl, loginData, {
         headers: { "Content-Type": "application/json" },
       });
-
       console.log(response.data);
-
-      let { quizTitle, quizKey, status, players } = response.data;
-
-      // states
-      setQuizTitle(quizTitle || "Loading");
-      setQuizKey(quizKey || "Loading");
-      setStatus(status || "Loading");
-      setPlayers(players || []);
-      setPrompt("Login successful. Welcome!");
+      setToken(response.data.accessToken);
+      refreshPlayers();
       setIsLoggedIn(true);
     } catch (error) {
       console.error(error);
@@ -71,11 +64,23 @@ const QuizControl = ({ quizId }) => {
   const refreshPlayers = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(loginUrl, {
-        adminId: adminid,
-        password: adminpass,
-      });
+      const response = await axios.get(
+        `https://quizapp-r80t.onrender.com/admin/fetchQuiz?adminId=${adminid}`,{},
+        {
+          headers: { "Content-Type": "application/json" },
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      console.log(response.data);
+
       setPlayers(response.data.players || []);
+      let { quizTitle, quizId, status, players } = response.data;
+      // states
+      setQuizTitle(quizTitle || "Loading");
+      setQuizKey(quizId || "Loading");
+      setStatus(status || "Loading");
+      setPlayers(players || []);
+      setPrompt("Login successful. Welcome!");
       setActionStatus("Player list refreshed!");
     } catch (error) {
       console.error("Error refreshing players:", error.message);
@@ -88,6 +93,7 @@ const QuizControl = ({ quizId }) => {
   useEffect(() => {
     if (isLoggedIn) {
       console.log("Admin logged in, quiz data and players set.");
+      refreshPlayers();
     }
   }, [isLoggedIn]);
 

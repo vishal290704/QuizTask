@@ -23,7 +23,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/room/:quizType/:roomCode/:username/:title" element={<QuizRoom />} />
         <Route path="/local-quiz" element={<LocalQuizzes />} />
-        <Route path="/results/:username" element={<Result/>} />
+        <Route path="/results/" element={<Result/>} />
 
         {/* admin */}
         <Route path="/admin/create" element={<CreateQuiz />} />
