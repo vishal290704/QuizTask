@@ -25,6 +25,14 @@ const AdminRoutes = () => {
         <ul className="text-[1.5em] md:text-[2em] text-center space-y-6">
           <li>
             <Link
+              to="/admin/register"
+              className="text-white [text-shadow:0_0_10px_black] hover:[text-shadow:0_0_10px_rgba(255,255,255,0.4)]"
+            >
+              Register
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/admin/create"
               className="text-white [text-shadow:0_0_10px_black] hover:[text-shadow:0_0_10px_rgba(255,255,255,0.4)]"
             >

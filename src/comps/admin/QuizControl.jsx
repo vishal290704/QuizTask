@@ -117,7 +117,7 @@ const QuizControl = ({ quizId }) => {
           <form onSubmit={authenticateAdmin}>
             <div className="mb-4 text-center font-semibold">{prompt}</div>
             <div className="mb-4">
-              <label className="block font-medium mb-2">Admin ID:</label>
+              <label className="block font-medium mb-2">Admin Email:</label>
               <input
                 type="text"
                 value={adminid}

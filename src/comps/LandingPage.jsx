@@ -53,13 +53,13 @@ const LandingPage = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium">Room Code:</label>
+            <label className="block text-sm font-medium">Quiz ID:</label>
             <input
               type="text"
               value={roomCode}
               onChange={(e) => setRoomCode(e.target.value)}
               className="mt-1 block w-full border rounded-lg text-gray-600 border-gray-300 p-2 focus:outline"
-              placeholder="Enter room code"
+              placeholder="Enter a Quiz ID"
             />
           </div>
 

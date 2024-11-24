@@ -162,7 +162,7 @@ const QuizRoom = () => {
           </div>
         ) : (
           <div>
-            <h1 className="text-[5vw] pt-5 md:text-[3em] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
+            <h1 className="text-[5vw] md:text-[3em] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
               {loadedTitle}
             </h1>
           </div>
@@ -226,7 +226,7 @@ const QuizRoom = () => {
           quizStatus ? (
             <div className="flex px-2">
               {/* left panel for leaderboard and player data */}
-              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
+              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 mt-[2vh] h-[88vh] rounded-xl">
                 {/* player data */}
                 <div className="flex text-white text-center px-2 flex-col py-4 mx-0 w-full h-3/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">:) stats</p>
@@ -241,7 +241,7 @@ const QuizRoom = () => {
               </div>
 
               {/* quiz box - question panel */}
-              <div className="relative flex flex-col items-center w-[96vw] py-[2vh] justify-center my-[2vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
+              <div className="relative flex flex-col items-center w-[96vw] py-[2vh] justify-center mt-[4vh] md:my-[1vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
                 {/* mapping questions */}
                 {questions.length > 0 &&
                 currentQuestionIndex < questions.length ? (
@@ -311,7 +311,7 @@ const QuizRoom = () => {
             // quizstatus true means quiz has to start
             <div className="flex px-2">
               {/* left panel for leaderboard and player data */}
-              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 m-[2vh] h-[88vh] rounded-xl">
+              <div className="md:flex hidden text-white mx-0 mr-2 text-center flex-col space-y-3 w-1/5 my-[1vh] h-[88vh] rounded-xl">
                 {/* leaderboard */}
                 <div className="flex text-white text-center flex-col py-4 px-2 mx-0 w-full h-2/5 bg-[rgba(255,255,255,0.2)] rounded-xl shadow-xl">
                   <p className="text-2xl mb-4 ">Leaderboard</p>
@@ -335,7 +335,7 @@ const QuizRoom = () => {
               </div>
 
               {/* quiz box - question panel */}
-              <div className="relative flex flex-col items-center w-[96vw] py-[2vh] justify-center my-[2vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
+              <div className="relative flex flex-col items-center w-[96vw] py-[2vh] justify-center mt-[4vh] md:my-[1vh] h-[88vh] bg-[rgba(0,0,0,0.2)] rounded-xl shadow-xl">
                 {/* mapping questions */}
                 {questions.length > 0 &&
                 currentQuestionIndex < questions.length ? (

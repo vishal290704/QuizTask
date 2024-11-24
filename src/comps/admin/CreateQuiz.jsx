@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 // API URLs
-let registerUrl = "https://quizapp-r80t.onrender.com/admin/register";
-let createQuizUrl = "/api/admin/create-quiz";
+const createQuizUrl = "https://quizapp-r80t.onrender.com/admin/createQuiz";
+const loginUrl = "https://quizapp-r80t.onrender.com/admin/login";
 
-// sample id
+// Sample for testing
 const SAMPLE_ADMIN_ID = "testAdmin";
 const SAMPLE_ADMIN_PASS = "newPass";
 
@@ -15,52 +15,54 @@ const CreateQuiz = () => {
     document.title = "Create New Quiz - QuizSutra";
   }, []);
 
-  // state management
+  // State management
+  const [quizTitle, setQuizTitle] = useState("");
+  const [questions, setQuestions] = useState([]);
+  const [quizId, setquizId] = useState("");
+  const [token, setToken] = useState("");
+
+  // Admin authentication states
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [adminid, setAdmin] = useState("");
   const [adminpass, setAdminPass] = useState("");
-  const [prompt, setPrompt] = useState("Create a unique ID to continue");
-  const [btnTxt, setBtnTxt] = useState("Continue");
-  const [quizTitle, setQuizTitle] = useState("");
-  const [status, setStatus] = useState(false);
-  const [questions, setQuestions] = useState([]);
-  const [isRegistered, setIsRegistered] = useState(false);
+  const [prompt, setPrompt] = useState("Login to continue");
+  const [btnTxt, setBtnTxt] = useState("Login");
+  const [actionStatus, setActionStatus] = useState("");
 
-  // Register the admin
-  const registerAdmin = async (e) => {
+  // Authenticate admin
+  const authenticateAdmin = async (e) => {
     e.preventDefault();
 
-    // mock login
+    // Sample authentication for testing
     if (adminid === SAMPLE_ADMIN_ID && adminpass === SAMPLE_ADMIN_PASS) {
-      setPrompt("Registration successful. Proceed to create your quiz.");
-      setIsRegistered(true);
+      setIsLoggedIn(true);
       return;
     }
 
-    let signupData = {
+    const loginData = {
       adminId: adminid,
       password: adminpass,
     };
 
     try {
       setBtnTxt("...");
-      console.log("Admin ID:", adminid);
-      console.log("Admin Password:", adminpass);
-
-      let response = await axios.post(registerUrl, signupData, {
+      let response = await axios.post(loginUrl, loginData, {
         headers: { "Content-Type": "application/json" },
       });
       console.log(response.data);
-      setIsRegistered(true);
+      setPrompt("Login successful. Welcome!");
+      setIsLoggedIn(true);
+      setToken(response.data.accessToken);
     } catch (error) {
-      console.log(error);
-      console.error(error.data);
-      setPrompt("Registration failed. Try again.");
+      console.error(error);
+      console.error(error.response?.data);
+      setPrompt("Invalid ID or Password");
     } finally {
-      setBtnTxt("Continue");
+      setBtnTxt("Login");
     }
   };
 
-  // Add question
+  // Add a question to the quiz
   const addQuestion = () => {
     setQuestions([
       ...questions,
@@ -75,23 +77,41 @@ const CreateQuiz = () => {
     ]);
   };
 
-  // Submit quiz
+  // Submit  quiz
   const submitQuiz = async () => {
+    if (!quizTitle || questions.length === 0) {
+      alert("Quiz Title and Questions are required to submit the quiz.");
+      return;
+    }
+
     const quizData = {
-      admin: adminid,
-      title: quizTitle,
-      status,
-      questions,
+      adminid: adminid,
+      quizTitle: quizTitle,
+      questions: questions,
     };
 
     try {
       const response = await axios.post(createQuizUrl, quizData, {
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
       });
-      console.log(response.data);
-      alert("Quiz created successfully!");
+
+      setquizId(response.data.quizId);
+      alert(
+        `Quiz created successfully! Your Quiz ID is: ${response.data.quizId}`
+      );
+
+      // Reset form
+      setQuizTitle("");
+      setQuestions([]);
     } catch (error) {
-      console.error("Error creating quiz:", error.message);
+      console.error(
+        "Error creating quiz:",
+        error.response ? error.response.data : error.message
+      );
+      alert("Failed to create quiz. Please try again.");
     }
   };
 
@@ -115,39 +135,48 @@ const CreateQuiz = () => {
       </Link>
 
       {/* panel */}
-      <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
-        {!isRegistered ? (
-          <form onSubmit={registerAdmin}>
-            <div className="mb-4 font-semibold">{prompt}</div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium">Admin Email:</label>
-              <input
-                type="text"
-                value={adminid}
-                onChange={(e) => setAdmin(e.target.value)}
-                className="mt-1 block w-full border rounded-lg text-gray-600 border-gray-300 p-2 focus:outline"
-                placeholder="Enter an Email ID"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="block text-sm font-medium">Password:</label>
-              <input
-                type="password"
-                value={adminpass}
-                onChange={(e) => setAdminPass(e.target.value)}
-                className="mt-1 block w-full border rounded-lg text-gray-600 border-gray-300 p-2 focus:outline"
-                placeholder="Enter admin password"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:shadow-md hover:bg-[rgb(151,62,199)]"
-            >
-              {btnTxt}
-            </button>
-          </form>
+      <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
+        {!isLoggedIn ? (
+          // Login Panel
+          <div className="flex flex-col items-center mx-auto py-[2vh] justify-center mt-[10vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
+            <form onSubmit={authenticateAdmin}>
+              <div className="mb-4 text-center font-semibold">{prompt}</div>
+              <div className="mb-4">
+                <label className="block font-medium mb-2">Admin Email:</label>
+                <input
+                  type="text"
+                  value={adminid}
+                  onChange={(e) => setAdmin(e.target.value)}
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Enter admin ID"
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block font-medium mb-2">
+                  Admin Password:
+                </label>
+                <input
+                  type="password"
+                  value={adminpass}
+                  onChange={(e) => setAdminPass(e.target.value)}
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Enter admin password"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-purple-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-500"
+              >
+                {btnTxt}
+              </button>
+              {actionStatus && (
+                <p className="text-center text-red-600 mt-4">{actionStatus}</p>
+              )}
+            </form>
+          </div>
         ) : (
-          <div className="w-3/5">
+          // Quiz Creation Panel
+          <div className="w-3/5 mx-auto">
             <div className="mb-1">
               <label className="block text-[2md] font-medium">
                 Quiz Title:
@@ -159,21 +188,6 @@ const CreateQuiz = () => {
                 className="mt-1 block w-full border rounded-lg text-gray-600 border-gray-300 p-2 focus:outline"
                 placeholder="Enter quiz title"
               />
-            </div>
-
-            {/* Status */}
-            <div className="mb-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  checked={status}
-                  onChange={(e) => setStatus(e.target.checked)}
-                  className="form-checkbox"
-                />
-                <span className="ml-2 text-md font-medium">
-                  Start quiz Instantly
-                </span>
-              </label>
             </div>
 
             <div>

@@ -34,6 +34,7 @@ const LocalQuizzes = () => {
     // main rendering div function
     <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
       {/* Title */}
+
       <div>
         <h1 className="text-[5vw] pt-2 md:text-[3em] my-0 text-center font-bold text-white [text-shadow:0_0_10px_black]">
           Local Quizzes
@@ -64,12 +65,12 @@ const LocalQuizzes = () => {
                 </div>
                 <Link
                   // to={`/quiz/${quiz.quizKey}`}
-                  to={`/room/${"local"}/${quiz.category}/${"web"}/${quiz.title}`}
+                  to={`/room/${"local"}/${quiz.category}/${"web"}/${
+                    quiz.title
+                  }`}
                   className="text-white"
                 >
-                  <button
-                    className="py-2 px-4 bg-[rgba(255,255,255,0.5)] hover:bg-[rgba(255,255,255,0.3)] text-white font-bold rounded-lg"
-                  >
+                  <button className="py-2 px-4 bg-[rgba(255,255,255,0.5)] hover:bg-[rgba(255,255,255,0.3)] text-white font-bold rounded-lg">
                     Join Quiz
                   </button>
                 </Link>
