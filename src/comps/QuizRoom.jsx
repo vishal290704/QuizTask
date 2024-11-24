@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
-// import useHistory
 
 // api url
 const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
@@ -11,6 +10,7 @@ const fetchQuizUrl = "/sampleAPI/responseQuiz.json";
 const QuizRoom = () => {
   // data from previous page
   let { quizType, roomCode, username, title } = useParams();
+  // data for next page
   const navigate = useNavigate();
 
   const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
@@ -39,19 +39,19 @@ const QuizRoom = () => {
         if (response.data.length > 0) {
           setQuestions(response.data);
           setTitle(title);
-          setStatus(true); // Set quizStatus true once questions are loaded
-          setPrompt(""); // Clear any loading messages
+          setStatus(true);
+          setPrompt("");
         } else {
           setPrompt("No questions available.");
           setStatus(false);
         }
       } else if (quizType === "live") {
         const response = await axios.get(fetchQuizUrl);
-        setStatus(response.data.status);
+        setStatus(response.data.status || true);
         setTitle(response.data.quizTitle);
         if (response.data.status) {
           setQuestions(response.data.questions);
-          setPrompt(""); // Clear any loading messages
+          setPrompt("");
         } else {
           setPrompt("Waiting for the admin to start");
         }

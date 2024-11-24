@@ -47,14 +47,6 @@ const AdminRoutes = () => {
               Quiz Control
             </Link>
           </li>
-          <li>
-            <Link
-              to="/admin/quiz-results"
-              className="text-white [text-shadow:0_0_10px_black] hover:[text-shadow:0_0_10px_rgba(255,255,255,0.4)]"
-            >
-              Check Results
-            </Link>
-          </li>
         </ul>
       </div>
     </div>

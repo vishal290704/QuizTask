@@ -13,7 +13,6 @@ import './comps/clock';
 import AdminRoutes from "./comps/admin/AdminRoutes";
 import CreateQuiz from "./comps/admin/CreateQuiz";
 import QuizControl from "./comps/admin/QuizControl";
-import QuizResults from "./comps/admin/QuizResults";
 import Register from "./comps/admin/Register";
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
         <Route path="/admin" element={<AdminRoutes />} />
         <Route path="/admin/register" element={<Register />} />
         <Route path="/admin/quiz-control" element={<QuizControl />} />
-        <Route path="/admin/quiz-results" element={<QuizResults />} />
       </Routes>
     </Router>
   );
