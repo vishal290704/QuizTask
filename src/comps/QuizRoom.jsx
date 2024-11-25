@@ -33,7 +33,6 @@ const QuizRoom = () => {
 
   // axios fetch live
   const fetchQuizStatus = async () => {
-
     const userData = {
       username: username,
       quizId: roomCode,
@@ -52,12 +51,14 @@ const QuizRoom = () => {
           setStatus(false);
         }
       } else if (quizType === "live") {
-        const response = await axios.get(fetchQuizUrl, userData, {
+        const response = await axios.post(fetchQuizUrl, userData, {
           headers: { "Content-Type": "application/json" },
         });
-        setStatus(response.data.status || true);
+        console.log(response.data.quizTitle);
+        console.log(response.data.questions);
         setTitle(response.data.quizTitle);
-        if (response.data.status) {
+        if (response.data) {
+          setStatus(true);
           setQuestions(response.data.questions);
           setPrompt("");
         } else {
@@ -109,7 +110,7 @@ const QuizRoom = () => {
   useEffect(() => {
     if (quizStatus && questions.length > 0) {
       const quesTimer = setInterval(() => {
-        if (currentQuestionIndex == questions.length - 1 && timeLeft == 0) {
+        if (currentQuestionIndex == questions.length && timeLeft == 0) {
           navigate("/results", {
             state: {
               score,
@@ -234,7 +235,7 @@ const QuizRoom = () => {
           <>
             <p className="text-2xl mb-4 ">:) stats</p>
             <ul>
-              <li>Quiz: {loadedTitle || title}</li>
+              <li>Quiz Title: {loadedTitle || title}</li>
               <li>Category: {roomCode}</li>
               <li>Total Questions: {questions.length}</li>
             </ul>
@@ -253,7 +254,7 @@ const QuizRoom = () => {
             </div> */}
             <p className="text-2xl mb-4 ">:) {username}</p>
             <ul>
-              <li>Quiz: {loadedTitle}</li>
+              <li>Quiz Title: {loadedTitle}</li>
               <li>Room Code: {roomCode}</li>
               <li>Total Questions: {questions.length}</li>
             </ul>
@@ -368,7 +369,7 @@ const QuizRoom = () => {
                   <p className="text-2xl mb-4 ">:) {username}</p>
                   <ul>
                     <li>Quiz: {loadedTitle}</li>
-                    <li>Room Code: {roomCode}</li>
+                    <li>quizID: {roomCode}</li>
                     <li>Total Questions: {questions.length}</li>
                   </ul>
                 </div>

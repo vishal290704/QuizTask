@@ -29,6 +29,9 @@ const QuizControl = ({ quizId }) => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
 
+  let aToken = "";
+  let aId = "";
+
   // authenticate admin
   const authenticateAdmin = async (e) => {
     e.preventDefault();
@@ -50,6 +53,9 @@ const QuizControl = ({ quizId }) => {
       });
       console.log(response.data);
       setToken(response.data.accessToken);
+      console.log(token);
+      aToken = token;
+      aId = adminid;
       refreshPlayers();
       setIsLoggedIn(true);
     } catch (error) {
@@ -65,10 +71,13 @@ const QuizControl = ({ quizId }) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://quizapp-r80t.onrender.com/admin/fetchQuiz?adminId=${adminid}`,{},
+        `https://quizapp-r80t.onrender.com/admin/fetchQuiz?adminId=${encodeURIComponent(
+          aId
+        )}`,
+        {},
         {
-          headers: { "Content-Type": "application/json" },
-          Authorization: `Bearer ${token}`,
+          headers: { Accept: "*/*", "Content-Type": "application/json" },
+          Authorization: `Bearer ${aToken}`,
         }
       );
       console.log(response.data);
@@ -89,6 +98,87 @@ const QuizControl = ({ quizId }) => {
       setLoading(false);
     }
   };
+
+  // const refreshPlayers = async () => {
+  //   try {
+  //     setLoading(true);
+
+  //     const response = await axios.get(
+  //       `https://quizapp-r80t.onrender.com/admin/fetchQuiz?adminId=${encodeURIComponent(aId)}`,
+  //       {
+  //         headers: {
+  //           "Accept": "application/json",
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${aToken}`
+  //         }
+  //       }
+  //     );
+
+  //     if (response.status === 200 && response.data) {
+  //       console.log(response.data);
+  //       const { quizTitle, quizId, status, players } = response.data;
+
+  //       // Update states
+  //       setQuizTitle(quizTitle || "Loading");
+  //       setQuizKey(quizId || "Loading");
+  //       setStatus(status || "Loading");
+  //       setPlayers(players || []);
+  //       setPrompt("Login successful. Welcome!");
+  //       setActionStatus("Player list refreshed!");
+  //     } else {
+  //       throw new Error('Unexpected response format');
+  //     }
+  //   } catch (error) {
+  //     console.error("Error refreshing players:", error.message);
+
+  //     if (error.response) {
+  //       // Server responded with a status other than 200 range
+  //       console.error("Server responded with:", error.response.status, error.response.data);
+  //     } else if (error.request) {
+  //       // Request was made but no response was received
+  //       console.error("No response received:", error.request);
+  //     } else {
+  //       // Something else caused the error
+  //       console.error("Error", error.message);
+  //     }
+
+  //     setActionStatus("Failed to refresh player list.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const refreshPlayers = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.get(
+  //       `https://quizapp-r80t.onrender.com/admin/fetchQuiz?adminId=${encodeURIComponent(adminid)}`,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,  // Ensure token is correctly passed
+  //         },
+  //       }
+  //     );
+
+  //     if (response && response.data) {
+  //       console.log("API response:", response.data);
+  //       setPlayers(response.data.players || []);
+  //       setQuizTitle(response.data.quizTitle || "Loading");
+  //       setQuizKey(response.data.quizId || "Loading");
+  //       setStatus(response.data.status || "Loading");
+  //       setPrompt("Login successful. Welcome!");
+  //       setActionStatus("Player list refreshed!");
+  //     } else {
+  //       setActionStatus("No data returned from the server.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error refreshing players:", error.message);
+  //     setActionStatus("Failed to refresh player list.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     if (isLoggedIn) {

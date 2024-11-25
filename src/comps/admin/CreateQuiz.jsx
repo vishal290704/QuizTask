@@ -73,12 +73,12 @@ const CreateQuiz = () => {
     setQuestions([
       ...questions,
       {
+        quesKey: "",
         questionText: "",
         options: ["", "", "", ""],
         correctAnswer: "",
         category: "",
         difficulty: "",
-        questionKey: questions.length + 1,
       },
     ]);
   };
@@ -92,9 +92,15 @@ const CreateQuiz = () => {
 
     const quizData = {
       adminId: adminid,
-      status: actionStatus,
       quizTitle: quizTitle,
-      questions: questions,
+      questions: questions.map((q, i) => ({
+        quesKey: (i + 1).toString(),
+        questionText: q.questionText,
+        options: q.options,
+        correctAnswer: q.correctAnswer,
+        category: q.category,
+        difficulty: q.difficulty,
+      })),
     };
 
     try {
@@ -104,7 +110,6 @@ const CreateQuiz = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       setQuizSuccess(
         `Quiz created successfully! Your Quiz ID is: ${response.data.quizId}`
       );
@@ -112,7 +117,6 @@ const CreateQuiz = () => {
       message(
         `Quiz created successfully! Your Quiz ID is: ${response.data.quizId}`
       );
-
       // Reset form
       setQuizTitle("");
       setQuestions([]);
@@ -186,7 +190,7 @@ const CreateQuiz = () => {
           </div>
         ) : (
           // Quiz Creation Panel
-          <div className="w-3/5 mx-auto">
+          <div className="w-3/5 overflow-y-scroll max-h-[70vh] rounded-lg px-1 mx-auto">
             <div className="mb-1">
               <label className="block text-[2md] font-medium">
                 Quiz Title:
