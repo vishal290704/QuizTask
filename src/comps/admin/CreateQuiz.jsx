@@ -292,14 +292,14 @@ const CreateQuiz = () => {
 
             {/* Display =quiz ID */}
             {quizSuccess ? (
-              <>
+              <div className="text-center text-lg">
                 <FontAwesomeIcon
                   icon={faCircleCheck}
                   className="text-green-600"
                 />
-                Quiz created successfully Quiz ID - {quizId}
+                Quiz created successfully Quiz ID - {quizId} <br />
                 Share Quiz ID with players for the quiz
-              </>
+              </div>
             ) : (
               <></>
             )}
