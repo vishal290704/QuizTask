@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 // Sample API
 const loginUrl = "https://quizapp-r80t.onrender.com/admin/login";
+const fetchUrl = "https://quizapp-r80t.onrender.com/admin/fetchQuiz";
 
 // Sample for testing
 const SAMPLE_ADMIN_ID = "testAdmin";
@@ -28,6 +29,7 @@ const QuizControl = ({ quizId }) => {
   const [actionStatus, setActionStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
+  let url = `${fetchUrl}?adminId=${adminid}`;
 
   let aToken = "";
   let aId = "";
@@ -70,21 +72,20 @@ const QuizControl = ({ quizId }) => {
   const refreshPlayers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `https://quizapp-r80t.onrender.com/admin/fetchQuiz?adminId=${encodeURIComponent(
-          aId
-        )}`,
-        {},
-        {
-          headers: { Accept: "*/*", "Content-Type": "application/json" },
-          Authorization: `Bearer ${aToken}`,
-        }
-      );
+      console.log(url, token);
+      
+      const response = await axios.get(url,{
+        "adminId": adminid
+      }, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(response.data);
-
       setPlayers(response.data.players || []);
       let { quizTitle, quizId, status, players } = response.data;
-      // states
       setQuizTitle(quizTitle || "Loading");
       setQuizKey(quizId || "Loading");
       setStatus(status || "Loading");
