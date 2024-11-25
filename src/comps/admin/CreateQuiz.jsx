@@ -124,7 +124,7 @@ const CreateQuiz = () => {
       setQuestions([]);
     } catch (error) {
       setPrompt('waiting...')
-      alert("Failed to create quiz. Please try again.");
+      // alert("Failed to create quiz. Please try again.");
     }finally{
       setTxt('Create Quiz')
     }
