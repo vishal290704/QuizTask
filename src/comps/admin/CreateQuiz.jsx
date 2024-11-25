@@ -28,6 +28,7 @@ const CreateQuiz = () => {
   const [adminpass, setAdminPass] = useState("");
   const [prompt, setPrompt] = useState("Login to continue");
   const [btnTxt, setBtnTxt] = useState("Login");
+  const [cTxt, setTxt] = useState("Create Quiz");
   const [actionStatus, setActionStatus] = useState(true);
 
   // quiz creating
@@ -104,6 +105,7 @@ const CreateQuiz = () => {
     };
 
     try {
+      setTxt('...')
       const response = await axios.post(createQuizUrl, quizData, {
         headers: {
           "Content-Type": "application/json",
@@ -121,11 +123,10 @@ const CreateQuiz = () => {
       setQuizTitle("");
       setQuestions([]);
     } catch (error) {
-      console.error(
-        "Error creating quiz:",
-        error.response ? error.response.data : error.message
-      );
+      setPrompt('waiting...')
       alert("Failed to create quiz. Please try again.");
+    }finally{
+      setTxt('Create Quiz')
     }
   };
 
@@ -286,7 +287,7 @@ const CreateQuiz = () => {
                 onClick={submitQuiz}
                 className="py-2 px-4 bg-purple-700 text-white rounded-lg hover:bg-purple-500 mt-2"
               >
-                Submit Quiz
+                {cTxt}
               </button>
             </div>
 
