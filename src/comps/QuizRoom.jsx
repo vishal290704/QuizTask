@@ -116,8 +116,8 @@ const QuizRoom = () => {
           questions[currentQuestionIndex].correctAnswer
         ) {
           setScore((prevScore) => {
-            console.log("Score updated:", prevScore + 1);
-            return prevScore + 1;
+            console.log("Score updated:", prevScore + 10);
+            return prevScore + 10;
           });
           setCorrectAns((prevScore) => prevScore + 1);
           setStreak((prevScore) => prevScore + 1);
@@ -136,7 +136,7 @@ const QuizRoom = () => {
                 questions[currentQuestionIndex].correctAnswer
               ) {
                 navigate(
-                  `/results/${score + 1}/${correctAns + 1}/${
+                  `/results/${score + 10}/${correctAns + 1}/${
                     streak + 1
                   }/${incorrectAns}/${username}/${roomCode}`
                 );
