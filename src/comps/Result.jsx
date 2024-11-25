@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 
 // Results Page Component
 const QuizResults = () => {
-  const location = useLocation();
-  const { score, correctAns, streak, incorrectAns, roomcode, username } =
-    location.state || {};
-
-  console.log(location.state);
+  const { score, correctAns, streak, incorrectAns, username, roomcode } =
+    useParams();
 
   useEffect(() => {
     document.title = `Results - QuizSutra`;

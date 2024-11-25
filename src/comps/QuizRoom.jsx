@@ -110,23 +110,10 @@ const QuizRoom = () => {
   useEffect(() => {
     if (quizStatus && questions.length > 0) {
       const quesTimer = setInterval(() => {
-        if (currentQuestionIndex == questions.length && timeLeft == 0) {
-          navigate("/results", {
-            state: {
-              score,
-              correctAns,
-              streak,
-              incorrectAns,
-              roomCode,
-              username,
-            },
-          });
-        }
-
+        // Check if the selected option is correct
         if (
-          selectedOptionIndex !== null &&
           questions[currentQuestionIndex].options[selectedOptionIndex] ==
-            questions[currentQuestionIndex].correctAnswer
+          questions[currentQuestionIndex].correctAnswer
         ) {
           setScore((prevScore) => {
             console.log("Score updated:", prevScore + 1);
@@ -138,26 +125,55 @@ const QuizRoom = () => {
           setStreak(0);
           setinCorrectAns((prev) => prev + 1);
         }
-        setCurrentQuestionIndex((prevIndex) => {
-          if (prevIndex < questions.length - 1) {
-            return prevIndex + 1;
-          } else {
+
+        // Check if it is the last question
+        if (currentQuestionIndex >= questions.length - 1) {
+          console.log(correctAns, incorrectAns);
+          if (currentQuestionIndex >= questions.length - 1) {
+            setTimeout(() => {
+              if (
+                questions[currentQuestionIndex].options[selectedOptionIndex] ==
+                questions[currentQuestionIndex].correctAnswer
+              ) {
+                navigate(
+                  `/results/${score + 1}/${correctAns + 1}/${
+                    streak + 1
+                  }/${incorrectAns}/${username}/${roomCode}`
+                );
+              } else {
+                navigate(
+                  `/results/${score}/${correctAns}/${0}/${
+                    incorrectAns + 1
+                  }/${username}/${roomCode}`
+                );
+              }
+            }, 500);
             clearInterval(quesTimer);
-            return prevIndex;
+            return;
           }
-        });
+        }
+
+        // Proceed to the next question if not the last
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setTimeLeft(10);
-        setSelectedOptionIndex(null);
+        setSelectedOptionIndex(null); // Reset the selected option for the next question
       }, 10000);
+
+      // Cleanup the interval on unmount
       return () => clearInterval(quesTimer);
     }
   }, [
-    quizStatus,
-    currentQuestionIndex,
-    questions,
-    navigate,
     questions.length,
+    quizStatus,
+    questions,
+    currentQuestionIndex,
     selectedOptionIndex,
+    score,
+    correctAns,
+    streak,
+    incorrectAns,
+    navigate,
+    roomCode,
   ]);
 
   // 10 second timer
