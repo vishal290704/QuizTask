@@ -13,7 +13,8 @@ const QuizRoom = () => {
   // data for next page
   const navigate = useNavigate();
 
-  const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
+  // const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
+  const catUrl = '../assets/SampleQuiz.json'
   useEffect(() => {
     document.title = `${roomCode} - QuizSutra`;
   }, []);
