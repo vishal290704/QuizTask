@@ -7,7 +7,6 @@ import QuizRoom from "./comps/QuizRoom";
 import LocalQuizzes from "./comps/LocalQuizzes";
 import Result from "./comps/Result";
 
-import './comps/clock';
 
 // admin comps
 import AdminRoutes from "./comps/admin/AdminRoutes";
