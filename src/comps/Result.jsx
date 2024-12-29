@@ -46,7 +46,7 @@ const QuizResults = () => {
   }, [score, correctAns, streak, incorrectAns, username, roomcode]);
 
   return (
-    <div className="flex-col p-0 text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
+    <div className="flex-col p-0 text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-blue-800 to-blue-600 w-screen h-screen">
       <Link to="/">
         <div className="absolute p-[12px] font-bold text-white top-[12px] left-[10px] bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md">
           HOME
@@ -59,7 +59,7 @@ const QuizResults = () => {
       </h1>
 
       {/* Result panel */}
-      <div className="flex flex-row px-4 min-h-[22vh] items-center mx-auto py-[2vh] justify-center mt-[3vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
+      <div className="flex flex-row pl-10 pr-6 min-h-[45vh] items-center mx-auto py-[2vh] justify-center mt-[3vh] w-[90%] sm:w-[80%] max-w-4xl bg-[rgba(255,255,255,0.35)] rounded-xl shadow-md">
         <div className="w-3/5">
           <FontAwesomeIcon
             icon={faTrophy}
@@ -74,7 +74,7 @@ const QuizResults = () => {
         </div>
 
         {/* Leaderboard */}
-        <div className="mt-10 w-2/5 overflow-y-scroll max-h-[20vh]">
+        <div className="mt-10 w-2/5 overflow-y-scroll max-h-[38vh]">
           <h2 className="text-[3vh] font-bold text-center">Leaderboard</h2>
           <div className="flex flex-col items-center mt-4">
             {leaderboard.length > 0 ? (
