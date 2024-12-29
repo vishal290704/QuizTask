@@ -13,10 +13,10 @@ const QuizRoom = () => {
   // data for next page
   const navigate = useNavigate();
 
-  // const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
-  const catUrl = '../assets/SampleQuiz.json'
+  const catUrl = `https://quizapp-r80t.onrender.com/quizzes/category/${roomCode}`;
+  // const catUrl = '/sampleAPI/SampleQuiz.json'
   useEffect(() => {
-    document.title = `${roomCode} - QuizSutra`;
+    document.title = `${roomCode} - QuizSphere`;
   }, []);
 
   // states
@@ -212,7 +212,7 @@ const QuizRoom = () => {
   };
 
   return (
-    <div className="flex-col p-0 text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
+    <div className="flex-col p-0 text-white [text-shadow:0_0_5px_rgba(0,0,0,0.5)] justify-center items-center bg-gradient-to-t from-blue-800 to-blue-600 w-screen h-screen">
       {/* Title  with quiz type*/}
       {quizType == "live" || quizType == "local" ? (
         // live quiz

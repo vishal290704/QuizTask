@@ -12,7 +12,7 @@ const SAMPLE_ADMIN_PASS = "newPass";
 
 const QuizControl = ({ quizId }) => {
   useEffect(() => {
-    document.title = "Quiz Control - QuizSutra";
+    document.title = "Quiz Control - QuizSphere";
   }, []);
 
   // State variables
@@ -108,7 +108,7 @@ const QuizControl = ({ quizId }) => {
   }, [isLoggedIn]);
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-t from-violet-500 to-fuchsia-500">
+    <div className="flex flex-col h-screen bg-gradient-to-t from-blue-800 to-blue-600">
       {/* title */}
       <h1 className="text-[5vw] pt-2 md:text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
         QUIZ CONTROL
@@ -154,7 +154,7 @@ const QuizControl = ({ quizId }) => {
             </div>
             <button
               type="submit"
-              className="w-full bg-purple-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-500"
+              className="w-full bg-[rgb(50,65,223)] text-white font-bold py-2 px-4 rounded-lg hover:bg-[rgb(50,80,240)]"
             >
               {btnTxt}
             </button>
@@ -191,7 +191,7 @@ const QuizControl = ({ quizId }) => {
                   className={`px-4 py-2 max-w-48 rounded-lg text-white ${
                     status === "Started"
                       ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-purple-700 hover:bg-purple-500"
+                      : "bg-[rgb(50,65,223)] hover:bg-[rgb(50,80,240)]"
                   }`}
                 >
                   {loading && status !== "Started"
@@ -224,7 +224,7 @@ const QuizControl = ({ quizId }) => {
               <h3 className="text-xl font-bold">Players : {players.length}</h3>
               <button
                 onClick={refreshPlayers}
-                className="bg-purple-700 text-white px-2 py-1 rounded-lg hover:bg-purple-500"
+                className="bg-[rgb(50,65,223)] text-white px-2 py-1 rounded-lg hover:bg-[rgb(50,80,240)]"
               >
                 Refresh
               </button>

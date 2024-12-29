@@ -32,7 +32,7 @@ const LocalQuizzes = () => {
 
   return (
     // main rendering div function
-    <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
+    <div className="flex-col justify-center items-center bg-gradient-to-t from-blue-800 to-blue-600 w-screen h-screen">
       {/* Title */}
 
       <div>

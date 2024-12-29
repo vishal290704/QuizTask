@@ -15,7 +15,7 @@ const QuizResults = () => {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    document.title = `Results - QuizSutra`;
+    document.title = `Results - QuizSphere`;
 
     const playerData = {
       username: username,

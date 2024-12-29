@@ -9,7 +9,7 @@ const SAMPLE_ADMIN_PASS = "newPass";
 
 const Register = () => {
   useEffect(() => {
-    document.title = `Register - QuizSutra`;
+    document.title = `Register - QuizSphere`;
   }, []);
 
   const [adminid, setAdmin] = useState("");
@@ -55,7 +55,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-t from-violet-500 to-fuchsia-500">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-blue-600 to-blue-800">
       {/* title */}
       <h1 className="text-[5vw] pt-2 md:text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
         REGISTER
@@ -99,7 +99,7 @@ const Register = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-[rgb(139,5,180)] text-white font-bold rounded-lg hover:shadow-md hover:bg-[rgb(151,62,199)]"
+              className="w-full py-2 px-4 bg-[rgb(50,65,223)] text-white font-bold rounded-lg hover:shadow-md hover:bg-[rgb(50,80,240)]"
             >
               {btnTxt}
             </button>
@@ -109,7 +109,7 @@ const Register = () => {
             <div className="mb-4 font-semibold">{prompt}</div>
             <Link
               to="/admin/create"
-              className="py-2 px-4 bg-purple-700 font-bold text-white rounded-lg hover:bg-purple-500 mt-2"
+              className="py-2 px-4 bg-[rgb(50,65,223)] font-bold text-white rounded-lg hover:bg-[rgb(50,80,240)] mt-2"
             >
               Go to Create Quiz
             </Link>

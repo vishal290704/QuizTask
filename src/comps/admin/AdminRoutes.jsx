@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 const AdminRoutes = () => {
   useEffect(() => {
-    document.title = "Admin - QuizSutra";
+    document.title = "Admin - QuizSphere";
   }, []);
 
   return (
-    <div className="flex flex-col justify-start items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
+    <div className="flex flex-col justify-start items-center bg-gradient-to-b from-blue-600 to-blue-800 w-screen h-screen">
       {/* Title */}
       <h1 className="mt-1 text-[2em] md:text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_purple]">
         ADMIN ROUTES

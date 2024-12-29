@@ -16,12 +16,12 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    document.title = "Home - QuizSutra";
+    document.title = "Home - QuizSphere";
   }, []);
 
   return (
     // landing page
-    <div className="h-screen w-screen bg-gradient-to-t from-violet-500 to-fuchsia-500 flex items-center justify-center bg-gray-100">
+    <div className="h-screen w-screen bg-gradient-to-b from-blue-600 to-blue-800 flex items-center justify-center bg-gray-100">
       <Link
         to="/admin"
         className="absolute bg-[rgba(0,0,0,0.55)] rounded-xl shadow-md p-[10px] font-bold text-white top-3 right-5"
@@ -34,10 +34,10 @@ const LandingPage = () => {
         {/* left */}
         <div className="w-full md:w-1/2 p-6 rounded-t-lg md:rounded-l-lg md:rounded-tr-none flex flex-col justify-center">
           <h1 className="text-4xl font-bold text-white text-center md:text-left">
-            QuizSutra
+            QuizSphere
           </h1>
           <p className="text-white mt-2 text-center md:text-left">
-            powered by Cloud Computing Cell, AKGEC
+            Learn | Compete | Excel
           </p>
         </div>
 
@@ -68,14 +68,14 @@ const LandingPage = () => {
           </div>
 
           {/* buttons */}
-          <button className="w-full mb-3 py-2 px-4 bg-[rgb(135,28,188)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(138,42,197)]">
+          <button className="w-full mb-3 py-2 px-4 bg-[rgb(50,65,223)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(59,80,242)]">
             Join Room
           </button>
           <div className="text-center block">or</div>
           <div className="mt-4 text-center">
             <button
               onClick={() => navigate("/local-quiz")}
-              className="w-full py-2 px-4 bg-[rgb(128,28,188)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(138,42,197)]"
+              className="w-full py-2 px-4 bg-[rgb(50,65,223)] shadow-md text-white font-bold rounded-lg hover:bg-[rgb(59,80,242)]"
             >
               Play Local Quizzes
             </button>

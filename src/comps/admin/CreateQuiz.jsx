@@ -14,7 +14,7 @@ const SAMPLE_ADMIN_PASS = "newPass";
 
 const CreateQuiz = () => {
   useEffect(() => {
-    document.title = "Create New Quiz - QuizSutra";
+    document.title = "Create New Quiz - QuizSphere";
   }, []);
 
   // State management
@@ -131,7 +131,7 @@ const CreateQuiz = () => {
   };
 
   return (
-    <div className="flex-col justify-center items-center bg-gradient-to-t from-violet-500 to-fuchsia-500 w-screen h-screen">
+    <div className="flex-col justify-center items-center bg-gradient-to-b from-blue-600 to-blue-800 w-screen h-screen">
       {/* title */}
       <h1 className="text-[5vw] pt-2 md:text-[3em] text-center font-bold text-white [text-shadow:0_0_10px_black]">
         CREATE NEW QUIZ
@@ -180,7 +180,7 @@ const CreateQuiz = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-purple-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-500"
+                className="w-full bg-[rgb(50,65,223)] text-white font-bold py-2 px-4 rounded-lg hover:bg-[rgb(50,80,240)]"
               >
                 {btnTxt}
               </button>
@@ -285,7 +285,7 @@ const CreateQuiz = () => {
               </button>
               <button
                 onClick={submitQuiz}
-                className="py-2 px-4 bg-purple-700 text-white rounded-lg hover:bg-purple-500 mt-2"
+                className="py-2 px-4 bg-[rgb(50,65,223)] text-white rounded-lg hover:bg-[rgb(50,80,240)] mt-2"
               >
                 {cTxt}
               </button>
